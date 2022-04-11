@@ -5,6 +5,15 @@ const port = process.env.PORT || 3000
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
+    res.redirect("/home");
+})
+
+app.get('/home', (req, res) => {
     res.sendFile(__dirname+"/src/index.html")
 })
+app.get('/about', (req, res) => {
+    res.sendFile(__dirname+"/src/aboutUs.html")
+})
+
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

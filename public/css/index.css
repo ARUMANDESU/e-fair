@@ -4,8 +4,11 @@ body{
     margin: 0;
     padding: 0;
     background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
+    
 }
-
+.logo p{
+    font-size: 48px;;
+}
 .mainsection{
     background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
     padding: 0px;
@@ -14,27 +17,42 @@ body{
 .item{
     background-color: #F6F6F6;
     border-radius: 25px;
-    width: 342px;
-    height: 504px;
+    width: 250px;
+    height: 320px;
     filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
     font-size: 28px;
     padding: 30px 5px 30px 5px;
-    margin-right: 93px;
+    margin-right: 73px;
     margin-bottom: 20px;
 }
 .item img{
     position: relative;
-    width: 321px;
-    height: 288px;
+    width: 220px;
+    height: 180px;
     left: 5px;
     border-radius: 25px;
 }
 
 .types {
-    width: 400px;
-    height: 328px;
-    background-color: white;
+    width: 300px;
+    height: 228px;
+    background-color: #F6F6F6;
+    filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
     text-align: center;
     border-radius: 25px;
     margin: 0px;
 }
+.types:hover{
+
+    color:#9CD821;
+}
+
+.link a{
+    text-decoration: none;
+    color: #E2E2E2;
+}
+.link a:hover{
+    text-decoration: none;
+    color: #9CD821;
+}
+
