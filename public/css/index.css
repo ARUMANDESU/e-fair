@@ -1,8 +1,27 @@
 body{
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
     margin: 0;
-    
+    padding: 0;
+    background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
 }
 
-.green{
-    background-color: #9CD821;
+.mainsection{
+    background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
+    padding: 0px;
+}
+
+.item{
+    background-color: #F6F6F6;
+    border-radius: 25px;
+    width: 342px;
+    height: 504px;
+    filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
+    font-size: 28px;
+    padding: 30px 5px 30px 5px;
+    margin-right: 93px;
+}
+.item img{
+    width: 321px;
+    height: 288px;
 }

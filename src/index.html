@@ -4,43 +4,131 @@
     <title>E-Fair</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <!-- font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script></head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class=" container">
-            <a class="navbar-brand" href="#"><img src="/images/logo.svg"> </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="cart">
-                            <img src="/images/cart.png">
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a href="login">
-                            <img src="/images/login.png">
-                        </a>
-                    </li>
-                </ul>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0;">
+        <div class=" container-fluid " style="background-color: #9CD821;">
+            <div class="container justify-content-around d-flex">
+                <a class="navbar-brand d-flex flex-row" href="#" ><img src="/images/logo.svg"> <p class="text-center pt-3">E-FAIR</p>  </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+    
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+                        <li class="nav-item">
+                            <a href="cart">
+                                <img src="/images/cart.png">
+                            </a>
+    
+                        </li>
+                        <li class="nav-item">
+                            <a href="login">
+                                <img src="/images/login.png">
+                            </a>
+                        </li>
+                    </ul>
+    
+                </div>
             </div>
+            
         </div>
-        </nav>
-        
+    </nav>
+
+    
+    </div>
+
+    <div class=" container-fluid mainsection" >
+        <section class=" container-fluid py-5" style="border-radius: 67px;background-color: #F2F2F2;"> 
+            <div id="carouselExampleCaptions" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner container">
+                    <div class="carousel-item active">
+                        <img src="http://itmultimedia.ru/wp-content/uploads/2014/12/4k.png" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>First slide label</h5>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="data:image/png;base64,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" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Second slide label</h5>
+                            <p>Some representative placeholder content for the second slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="data:image/jpeg;base64,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" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Third slide label</h5>
+                            <p>Some representative placeholder content for the third slide.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            
+            <div class="container" id="top" style="margin-top: 150px;">
+                <p class="text-start">TOP SELECTION</p>
+                <div class="d-flex flex-wrap">
+                    <div class=" item">
+                        <img src="/images/cart.png" alt="#">
+                        <div class="d-flex flex-column">
+                            <b>2199 тг./кг.</b>
+                            <p>Картофельные помидоры / Овощи</p>
+                        </div>
+                    </div>
+                    <div class=" item">
+                        <img src="/images/cart.png" alt="#">
+                        <div class="d-flex flex-column">
+                            <b>2199 тг./кг.</b>
+                            <p>Картофельные помидоры / Овощи</p>
+                        </div>
+                    </div>
+                    <div class=" item">
+                        <img src="/images/cart.png" alt="#">
+                        <div class="d-flex flex-column">
+                            <b>2199 тг./кг.</b>
+                            <p>Картофельные помидоры / Овощи</p>
+                        </div>
+                    </div>
+                    <div class=" item">
+                        <img src="/images/cart.png" alt="#">
+                        <div class="d-flex flex-column">
+                            <b>2199 тг./кг.</b>
+                            <p>Картофельные помидоры / Овощи</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+    
         
     
 </body>
