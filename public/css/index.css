@@ -20,8 +20,21 @@ body{
     font-size: 28px;
     padding: 30px 5px 30px 5px;
     margin-right: 93px;
+    margin-bottom: 20px;
 }
 .item img{
+    position: relative;
     width: 321px;
     height: 288px;
+    left: 5px;
+    border-radius: 25px;
+}
+
+.types {
+    width: 400px;
+    height: 328px;
+    background-color: white;
+    text-align: center;
+    border-radius: 25px;
+    margin: 0px;
 }
