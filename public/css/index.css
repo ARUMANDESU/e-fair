@@ -55,4 +55,11 @@ body{
     text-decoration: none;
     color: #9CD821;
 }
-
+.viewMore {
+    background-color: #9BD524; border: 0px; border-radius: 40px; width: 446px; color: white; margin-bottom: 150px; margin-left: 400px; margin-top: 30px
+}
+@media screen and (max-width: 1024px) {
+    .viewMore {
+         margin-left: 0px;
+    }
+}
