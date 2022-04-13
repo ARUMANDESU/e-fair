@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
@@ -9,7 +10,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/home', (req, res) => {
-    res.sendFile(__dirname+"/src/index.html")
+    res.render("index")
 })
 app.get('/about', (req, res) => {
     res.sendFile(__dirname+"/src/aboutUs.html")
