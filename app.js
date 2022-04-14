@@ -15,6 +15,9 @@ app.get('/home', (req, res) => {
 app.get('/about', (req, res) => {
     res.sendFile(__dirname+"/src/aboutUs.html")
 })
+app.get('/login', (req, res) => {
+    res.render("login")
+})
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
