@@ -1,9 +1,9 @@
 body{
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
+    background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%);
 }
 .sticky{
-    
+
     position: sticky;
 }
 .logo p{
@@ -48,4 +48,84 @@ body{
     opacity: 0.8;
     border: 1px solid black;
     border-radius: 1em;
+}
+.containerBanner {
+    position: relative;
+    margin-left: 10%;
+    width: 100%;
+    max-width: 80%;
+    margin-bottom: 5%;
+}
+
+.containerBanner img {
+    width: 100%;
+    height: auto;
+    border-radius: 2em;
+}
+
+.containerBanner .showmore {
+    position: absolute;
+    top: 90%;
+    left: 92%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: white;
+    color: black;
+    font-size: 10px;
+    padding: 16px 32px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.containerBanner .showmore:hover {
+    background-color: gray;
+    border-radius: 7px;
+}
+.banner{
+    border-radius: 15%;
+    max-width: 80%;
+    height: auto;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 300px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    width: 75%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    margin-left: auto;
+    margin-right: 2%;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
