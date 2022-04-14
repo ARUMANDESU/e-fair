@@ -17,3 +17,4 @@ A website where farm food sellers can list their products and users can choose b
 - [Node Package Manager](https://www.npmjs.com)
 - [Express (Node.js framework)](https://expressjs.com/ru/)
 - [MongoDB (Database)](https://www.mongodb.com)
+- [EJS (Embedded JavaScript templates)](https://www.npmjs.com/package/ejs)
