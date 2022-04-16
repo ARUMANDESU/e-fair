@@ -13,11 +13,15 @@ app.get('/home', (req, res) => {
     res.render("index")
 })
 app.get('/about', (req, res) => {
-    res.sendFile(__dirname+"/src/aboutUs.html")
+    res.render('aboutUs')
 })
 app.get('/login', (req, res) => {
     res.render("login")
 })
+app.get('/reg', (req, res) => {
+    res.render("reg")
+})
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
