@@ -18,7 +18,7 @@ app.get('/about', (req, res) => {
 app.get('/login', (req, res) => {
     res.render("login")
 })
-app.get('/reg', (req, res) => {
+app.get('/register', (req, res) => {
     res.render("reg")
 })
 
