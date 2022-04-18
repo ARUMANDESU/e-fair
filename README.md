@@ -21,7 +21,7 @@ A website where farm food sellers can list their products and users can choose b
 
 #
 
-### ejs tamplate:
+### ejs template:
 ```
 <!DOCTYPE html>
 <html lang="en">
