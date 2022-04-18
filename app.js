@@ -21,6 +21,9 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
     res.render("reg")
 })
+app.get('/catalog', (req, res) => {
+    res.render("catalog")
+})
 
 
 
