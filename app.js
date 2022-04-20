@@ -4,11 +4,10 @@ const app = express()
 const mongoose = require('mongoose');
 const pageRouter =require("./routers/pageRouter")
 const authRouter =require("./routers/authRouter")
-
+const {db}= require(__dirname+"/config")
 app.set('view engine', 'ejs')
 
 const port = process.env.PORT || 3000
-const db = 'mongodb+srv://mauk14:0qPTqT3sErKJD2Xe@cluster0.odtn9.mongodb.net/database(main)?retryWrites=true&w=majority'
 
 app.use("/",pageRouter, authRouter)
 app.use(express.static('public'))
