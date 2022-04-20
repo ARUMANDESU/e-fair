@@ -1,9 +1,18 @@
-const express = require('express')
+const express = require('express');
 const app = express()
-const port = process.env.PORT || 3000
+const mongoose = require('mongoose');
 
 app.set('view engine', 'ejs')
+
+const port = process.env.PORT || 3000
+
+const db = 'mongodb+srv://mauk14:0qPTqT3sErKJD2Xe@cluster0.odtn9.mongodb.net/database(main)?retryWrites=true&w=majority'
 app.use(express.static('public'))
+
+mongoose
+    .connect(db)
+    .then((res) => console.log('Connected to DB'))
+    .catch(error => console.log(error))
 
 app.get('/', (req, res) => {
     res.redirect("/home");
