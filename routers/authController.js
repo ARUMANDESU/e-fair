@@ -6,6 +6,12 @@ const jwt =require("jsonwebtoken")
 const {validationResult} =require("express-validator");
 const {secret}= require("../config")
 
+
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = "604574523814-40f76epsh7ji778mnp5c57ct9jm41dqv.apps.googleusercontent.com";
+const client = new OAuth2Client(CLIENT_ID);
+
+
 const generateAccessToken = (id,role)=>{
     const payload={
         id,
@@ -17,9 +23,29 @@ const generateAccessToken = (id,role)=>{
 class authController{
     async register(req, res){
         try{
-            const username= req.body.username;
-            const password= req.body.password;
+            
+            let token = req.body.token;
+            
+            console.log(token);
 
+            async function verify() {
+                const ticket = await client.verifyIdToken({
+                    idToken: token,
+                    audience: CLIENT_ID,
+                })
+                const payload = ticket.getPayload();
+                const userid = payload['sub'];
+                console.log(payload);
+                return payload;
+            }
+
+
+          
+            
+            
+            const username = req.body.token != null ? verify().username :  req.body.username;
+            const password = req.body.token != null ? verify().username :  req.body.password;
+            
             const errors =validationResult(req);
             if(!errors){
                 return res.status(400).json({message:"Error",errors})
@@ -35,6 +61,7 @@ class authController{
             const user = new User({username,password:hashPassword,roles:[userRole.value]});
             await user.save();
             return res.json({message:"The user has been successfully registered"})
+            
         }catch(e){
             console.log(e);
             res.status(400).json({message:"Registration error"})

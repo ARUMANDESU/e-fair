@@ -16,7 +16,7 @@ router
 
 router
     .get('/register', (req, res) => {
-    res.render("reg")})
+    res.render("register")})
     .post('/register', [
         check('username',"Username cannot be empty").notEmpty(),
         check('password',"Password must be more than 7 and less than 15 symbols").isLength({min:7,max:15})
