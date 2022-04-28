@@ -9,24 +9,24 @@ module.exports = function (roles) {
         }
 
         try {
-            const token = req.headers.authorization.split(' ')[1]
+            const token=req.cookies.auth.split(' ')[1]
             if (!token) {
-                return res.status(403).json({message: "Пользователь не авторизован"})
+                return res.status(403).json({message: "User not authorized"})
             }
-            const {roles: userRoles} = jwt.verify(token, secret)
+            const user = jwt.verify(token, secret)
             let hasRole = false
-            userRoles.forEach(role => {
+            user.role.forEach(role => {
                 if (roles.includes(role)) {
                     hasRole = true
                 }
             })
             if (!hasRole) {
-                return res.status(403).json({message: "У вас нет доступа"})
+                return res.status(403).json({message: "You don't have access"})
             }
             next();
         } catch (e) {
             console.log(e)
-            return res.status(403).json({message: "Пользователь не авторизован"})
+            return res.status(403).json({message: "User not authorized"})
         }
     }
 };

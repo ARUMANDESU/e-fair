@@ -40,9 +40,9 @@ class authController{
             }
 
 
-          
-            
-            
+
+
+            const email =   req.body.email;
             const username = req.body.token != null ? verify().username :  req.body.username;
             const password = req.body.token != null ? verify().username :  req.body.password;
             
@@ -58,7 +58,7 @@ class authController{
             }
             const hashPassword = bcrypt.hashSync(password,7);
             const userRole = await Role.findOne({value:"USER"});
-            const user = new User({username,password:hashPassword,roles:[userRole.value]});
+            const user = new User({email,username,password:hashPassword,roles:[userRole.value]});
             await user.save();
             return res.json({message:"The user has been successfully registered"})
             
@@ -82,7 +82,7 @@ class authController{
                 return res.status(400).json({message:`Wrong password`})
             }
             const token =generateAccessToken(user._id,user.roles);
-            res.header('Authorization', 'Bearer '+ token);
+            res.cookie("auth",'Bearer '+ token)
             return res.json(token)
         }catch(e){
             console.log(e);
