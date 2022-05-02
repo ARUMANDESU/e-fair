@@ -3,7 +3,7 @@ const router = express()
 const User = require("../modules/User")
 const Role = require("../modules/Role")
 const controller =require("./authController")
-const {check} = require("express-validator")
+const {check, checkSchema} = require("express-validator")
 const authMiddleware = require("../middlewaree/authMiddleware")
 const roleMiddleware= require("../middlewaree/roleMiddleware")
 const bodyParser = require("body-parser");
@@ -11,30 +11,60 @@ const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const {secret} = require('../config')
 
-const findUser=(req,res)=>{
+const  findUser=async (req,res)=>{
     try{
         const token=req.cookies.auth.split(' ')[1]
         if (!token) {
             return res.status(403).json({message: "User not authorized"})
         }
 
-        return User.findById(jwt.verify(token, secret)._id)
+        const u =  jwt.verify(token, secret)
+        // console.log(u.id)
+        const user1 = await User.findById(u.id)
+        setUser1(user1)
+        console.log(user1);
+        return user1
     }
     catch (e){
 
     }
     return null
 }
-
+const setUser1=async (user)=>{
+    user1.email=user.email;
+    user1.username=user1.username;
+    user1.avatarUrl=user1.avatarUrl;
+    user1.description=user1.description;
+    user1.fullname=user1.fullname
+    user1.phoneNumber=user1.phoneNumber
+    user1.address=user1.address
+    user1.twitterUrl=user1.twitterUrl
+    user1.instagramUrl=user1.instagramUrl
+    user1.facebookUrl=user1.facebookUrl
+}
 router.use(cookieParser())
 
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }));
 
+let user;
+let auth=user?true:false;
+let user1={
+    email:"",
+    username:"",
+    avatarUrl:"",
+    description:"",
+    fullname:"",
+    phoneNumber:"",
+    address:"",
+    twitterUrl:"",
+    instagramUrl:"",
+    facebookUrl:"",
+}
 router
     .get('/login', (req, res) => {
-        const user= findUser(req,res)
-        let auth=user?true:false;
+        auth=user?true:false;
+        console.log(auth)
     res.render("login",{auth:auth,})
 
     })
@@ -53,61 +83,68 @@ router
     .get("/users" , roleMiddleware(["ADMIN"]),controller.getUsers);
 
 router.get('/', (req, res) => {
+    user= findUser(req,res)
+    auth=user?true:false;
     res.redirect("/home");
 })
 
 router.get('/home', (req, res) => {
-    const user= findUser(req,res)
-    let auth=user?true:false;
+    user= findUser(req,res)
+    auth=user?true:false;
     res.render("index",{auth:auth,})
 })
 router.get('/about', (req, res) => {
-    const user= findUser(req,res)
-    let auth=user?true:false;
+    user= findUser(req,res)
+    auth=user?true:false;
     res.render('aboutUs',{auth:auth,})
 })
 router.get('/catalog', (req, res) => {
-    const user= findUser(req,res)
-    let auth=user?true:false;
+    user= findUser(req,res)
+    auth=user?true:false;
     res.render("catalog",{auth:auth,})
 })
 router.get('/user/profile/:id',(req, res) => {
-    const user= findUser(req,res)
-    let auth=user?true:false;
+    user= findUser(req,res)
+    auth=user?true:false;
+    setUser1(user)
+    console.log(user1)
+
+
     res.render("personalArea",{
         auth:auth,
         edit:false,
-        avatarUrl:user.avatarUrl,
-        username:user.username,
-        fullname:user.fullname,
-        phoneNumber:user.phoneNumber,
-        address:user.address,
-        email:user.email,
-        description:user.description,
-        twitterUrl:user.twitterUrl,
-        instagramUrl:user.instagramUrl,
-        facebookUrl:user.facebookUrl,
-        comments:[],
+        pavatarUrl:user,
+        pusername:user,
+        pfullname:user,
+        pphoneNumber:user,
+        paddress:user,
+        pemail:user,
+        pdescription:user,
+        ptwitterUrl:user,
+        pinstagramUrl:user,
+        pfacebookUrl:user,
+        pcomments:[],
     })
 })
 router
     .get('/user/edit',(req, res) => {
-        const user= findUser(req,res)
-        let auth=user?true:false;
+        user= findUser(req,res)
+        auth=user?true:false;
+
         res.render("personalArea",{
             auth:auth,
             edit:true,
-            avatarUrl:user.avatarUrl,
-            username:user.username,
-            fullname:user.fullname,
-            phoneNumber:user.phoneNumber,
-            address:user.address,
-            email:user.email,
-            description:user.description,
-            twitterUrl:user.twitterUrl,
-            instagramUrl:user.instagramUrl,
-            facebookUrl:user.facebookUrl,
-            comments:[],
+            pavatarUrl:user.avatarUrl,
+            pusername:user.username,
+            pfullname:user.fullname,
+            pphoneNumber:user.phoneNumber,
+            paddress:user.address,
+            pemail:user.email,
+            pdescription:user.description,
+            ptwitterUrl:user.twitterUrl,
+            pinstagramUrl:user.instagramUrl,
+            pfacebookUrl:user.facebookUrl,
+            pcomments:[],
         })
     })
     .post('/user/edit',(req, res) => {

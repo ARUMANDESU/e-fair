@@ -57,7 +57,7 @@ class authController{
             }
             const hashPassword = bcrypt.hashSync(password,7);
             const userRole = await Role.findOne({value:"USER"});
-            const user = new User({email,username,password:hashPassword,roles:[userRole.value]});
+            const user = new User({email,username,password:hashPassword,roles:[userRole.value],avatarUrl:"/avatars/ecce-homo.jpg",phoneNumber:"",address:"",twitterUrl:"",instagramUrl:"",facebookUrl:""});
             await user.save();
             return res.json({message:"The user has been successfully registered"})
             
