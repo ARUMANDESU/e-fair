@@ -1,4 +1,3 @@
-
 const User = require("../modules/User")
 const Role = require("../modules/Role")
 const bcrypt =require("bcryptjs")
@@ -94,10 +93,10 @@ class authController{
         try{
             const user= await User.find()
             res.json(user)
-            // const userRole =new Role()
-            // const adminRole =new Role({value:"ADMIN"})
-            // await userRole.save()
-            // await adminRole.save()
+            const userRole =new Role()
+            const adminRole =new Role({value:"ADMIN"})
+            await userRole.save()
+            await adminRole.save()
             res.json("GET USERS");
         }catch(e){
 

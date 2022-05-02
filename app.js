@@ -2,14 +2,13 @@ const express = require('express');
 const req = require('express/lib/request');
 const app = express()
 const mongoose = require('mongoose');
-const pageRouter =require("./routers/pageRouter")
 const authRouter =require("./routers/authRouter")
 const {db}= require(__dirname+"/config")
 app.set('view engine', 'ejs')
 
 const port = process.env.PORT || 3000
 
-app.use("/",pageRouter, authRouter)
+app.use("/", authRouter)
 app.use(express.static('public'))
 
 mongoose
@@ -21,5 +20,5 @@ mongoose
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 app.use((req,res)=>{
-    res.render('error')
+    res.render('error',{auth:"safs",})
 })
