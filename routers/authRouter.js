@@ -20,9 +20,7 @@ const  findUser=async (req,res)=>{
 
         const u =  jwt.verify(token, secret)
         // console.log(u.id)
-        const user1 = await User.findById(u.id)
-        setUser1(user1)
-        console.log(user1);
+
         return user1
     }
     catch (e){
@@ -30,18 +28,18 @@ const  findUser=async (req,res)=>{
     }
     return null
 }
-const setUser1=async (user)=>{
-    user1.email=user.email;
-    user1.username=user1.username;
-    user1.avatarUrl=user1.avatarUrl;
-    user1.description=user1.description;
-    user1.fullname=user1.fullname
-    user1.phoneNumber=user1.phoneNumber
-    user1.address=user1.address
-    user1.twitterUrl=user1.twitterUrl
-    user1.instagramUrl=user1.instagramUrl
-    user1.facebookUrl=user1.facebookUrl
-}
+// const setUser1=async (user)=>{
+//     user1.email=user.email;
+//     user1.username=user1.username;
+//     user1.avatarUrl=user1.avatarUrl;
+//     user1.description=user1.description;
+//     user1.fullname=user1.fullname
+//     user1.phoneNumber=user1.phoneNumber
+//     user1.address=user1.address
+//     user1.twitterUrl=user1.twitterUrl
+//     user1.instagramUrl=user1.instagramUrl
+//     user1.facebookUrl=user1.facebookUrl
+// }
 router.use(cookieParser())
 
 router.use(bodyParser.json())
@@ -49,18 +47,18 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 let user;
 let auth=user?true:false;
-let user1={
-    email:"",
-    username:"",
-    avatarUrl:"",
-    description:"",
-    fullname:"",
-    phoneNumber:"",
-    address:"",
-    twitterUrl:"",
-    instagramUrl:"",
-    facebookUrl:"",
-}
+// let user1={
+//     email:"",
+//     username:"",
+//     avatarUrl:"",
+//     description:"",
+//     fullname:"",
+//     phoneNumber:"",
+//     address:"",
+//     twitterUrl:"",
+//     instagramUrl:"",
+//     facebookUrl:"",
+// }
 router
     .get('/login', (req, res) => {
         auth=user?true:false;
@@ -104,27 +102,27 @@ router.get('/catalog', (req, res) => {
     res.render("catalog",{auth:auth,})
 })
 router.get('/user/profile/:id',(req, res) => {
-    user= findUser(req,res)
-    auth=user?true:false;
-    setUser1(user)
-    console.log(user1)
-
-
-    res.render("personalArea",{
-        auth:auth,
-        edit:false,
-        pavatarUrl:user,
-        pusername:user,
-        pfullname:user,
-        pphoneNumber:user,
-        paddress:user,
-        pemail:user,
-        pdescription:user,
-        ptwitterUrl:user,
-        pinstagramUrl:user,
-        pfacebookUrl:user,
-        pcomments:[],
+    User.findById(findUser(req,res).id,(err,results)=>{
+        res.render("personalArea",{
+            auth:auth,
+            edit:false,
+            pavatarUrl:results,
+            pusername:results,
+            pfullname:"ok",
+            pphoneNumber:user,
+            paddress:user,
+            pemail:user,
+            pdescription:user,
+            ptwitterUrl:user,
+            pinstagramUrl:user,
+            pfacebookUrl:user,
+            pcomments:[],
+        })
     })
+
+
+
+
 })
 router
     .get('/user/edit',(req, res) => {
