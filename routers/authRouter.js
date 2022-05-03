@@ -20,14 +20,16 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .get('/login',auth() , (req, res) => {
-    res.render("login",{auth:res.user,avatar:res.user.avatarUrl})
+        const avatar= res.user ? res.user.avatarUrl:""
+    res.render("login",{auth:res.user,avatar:avatar})
 
     })
     .post('/login', controller.login)
 
 router
     .get('/register',auth(), (req, res) => {
-    res.render("register",{auth:res.user,})
+        const avatar= res.user ? res.user.avatarUrl:""
+    res.render("register",{auth:res.user,avatar:avatar})
     })
     .post('/register', [
         check('username',"Username cannot be empty").notEmpty(),
@@ -42,16 +44,16 @@ router.get('/',auth() , (req, res) => {
 })
 
 router.get('/home',auth() , (req, res) => {
-
-    res.render("index",{auth:res.user,avatar:res.user.avatarUrl})
+    const avatar= res.user ? res.user.avatarUrl:""
+    res.render("index",{auth:res.user,avatar:avatar})
 })
 router.get('/about',auth() , (req, res) => {
-
-    res.render('aboutUs',{auth:res.user,avatar:res.user.avatarUrl})
+    const avatar= res.user ? res.user.avatarUrl:""
+    res.render('aboutUs',{auth:res.user,avatar:avatar})
 })
 router.get('/catalog',auth() ,(req, res) => {
-
-    res.render("catalog",{auth:res.user,avatar:res.user.avatarUrl})
+    const avatar= res.user ? res.user.avatarUrl:""
+    res.render("catalog",{auth:res.user,avatar:avatar})
 })
 router.get('/user/profile/:id',auth(),async (req, res) => {
     res.render("personalArea",{
@@ -77,6 +79,7 @@ router.get('/user/profile/:id',auth(),async (req, res) => {
 })
 router
     .get('/user/edit',auth(),(req, res) => {
+        const avatar= res.user ? res.user.avatarUrl:""
         res.render("personalArea",{
             avatar:res.user.avatarUrl,
             auth:res.user,
