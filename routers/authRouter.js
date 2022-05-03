@@ -92,8 +92,35 @@ router
             pcomments:[],
         })
     })
-    .post('/user/edit',(req, res) => {
-
+    .post('/user/edit',auth(),async (req, res) => {
+        const token=req.cookies.auth.split(' ')[1]
+        if (!token) {
+            return res.status(403).json({message: "User not authorized"})
+        }
+        const u = jwt.verify(token, secret)
+        const user = await User.updateOne({_id:u.id},{
+            phoneNumber:req.body.iphonenumber,
+            address:req.body.iaddress,
+            description:req.body.idescription,
+            twitterUrl:req.body.itwitterUrl,
+            instagramUrl:req.body.iinstagramUrl,
+            facebookUrl:req.body.ifacebookUrl
+        })
+        await res.render("personalArea",{
+            auth:res.user,
+            edit:false,
+            pavatarUrl:res.user.avatarUrl,
+            pusername:res.user.username,
+            pfullname:res.user.fullname,
+            pphoneNumber:res.user.phoneNumber,
+            paddress:res.user.address,
+            pemail:res.user.email,
+            pdescription:res.user.description,
+            ptwitterUrl:res.user.twitterUrl,
+            pinstagramUrl:res.user.instagramUrl,
+            pfacebookUrl:res.user.facebookUrl,
+            pcomments:[],
+        })
     })
 
 module.exports= router;
