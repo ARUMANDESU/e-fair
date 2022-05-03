@@ -19,17 +19,15 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 
 router
-    .get('/login', (req, res) => {
-    //     auth=user?true:false;
-        console.log(auth)
-    res.render("login",{auth:auth,})
+    .get('/login',auth() , (req, res) => {
+    res.render("login",{auth:res.user,})
 
     })
     .post('/login', controller.login)
 
 router
-    .get('/register', (req, res) => {
-    res.render("register",{auth:"safs",})
+    .get('/register',auth(), (req, res) => {
+    res.render("register",{auth:res.user,})
     })
     .post('/register', [
         check('username',"Username cannot be empty").notEmpty(),
@@ -37,24 +35,23 @@ router
     ],controller.register)
 
 router
-    .get("/users" , roleMiddleware(["ADMIN"]),controller.getUsers);
+    .get("/users"  ,controller.getUsers);
 
-router.get('/', (req, res) => {
-
+router.get('/',auth() , (req, res) => {
     res.redirect("/home");
 })
 
-router.get('/home', (req, res) => {
+router.get('/home',auth() , (req, res) => {
 
-    res.render("index",{auth:auth,})
+    res.render("index",{auth:res.user,})
 })
-router.get('/about', (req, res) => {
+router.get('/about',auth() , (req, res) => {
 
-    res.render('aboutUs',{auth:auth,})
+    res.render('aboutUs',{auth:res.user,})
 })
-router.get('/catalog', (req, res) => {
+router.get('/catalog',auth() ,(req, res) => {
 
-    res.render("catalog",{auth:auth,})
+    res.render("catalog",{auth:res.user,})
 })
 router.get('/user/profile/:id',auth(),async (req, res) => {
     res.render("personalArea",{

@@ -8,18 +8,23 @@ module.exports = function () {
         if (req.method === "OPTIONS") {
             next()
         }
-
-        try {
-            const token=req.cookies.auth.split(' ')[1]
-            if (!token) {
+        if(req.cookies.auth){
+            try {
+                const token=req.cookies.auth.split(' ')[1]
+                if (!token) {
+                    return res.status(403).json({message: "User not authorized"})
+                }
+                const user = jwt.verify(token, secret)
+                res.user= await User.findById(user.id)
+                next();
+            } catch (e) {
+                console.log(e)
                 return res.status(403).json({message: "User not authorized"})
             }
-            const user = jwt.verify(token, secret)
-            res.user= await User.findById(user.id)
-            next();
-        } catch (e) {
-            console.log(e)
-            return res.status(403).json({message: "User not authorized"})
         }
+        else{
+            next();
+        }
+
     }
 };

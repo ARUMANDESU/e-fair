@@ -8,11 +8,11 @@ const User = new Schema({
     avatarUrl:{type:String, unique:false,required:false},
     description:{type:String, unique:false,required:false},
     fullname:{type:String, unique:false,required:false},
-    phoneNumber:{type:String, unique:true,required:false},
+    phoneNumber:{type:String, unique:false,required:false},
     address:{type:String, unique:false,required:false},
-    twitterUrl:{type:String, unique:true,required:false},
-    instagramUrl:{type:String, unique:true,required:false},
-    facebookUrl:{type:String, unique:true,required:false},
+    twitterUrl:{type:String, unique:false,required:false},
+    instagramUrl:{type:String, unique:false,required:false},
+    facebookUrl:{type:String, unique:false,required:false},
 
 })
 
