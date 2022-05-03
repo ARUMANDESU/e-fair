@@ -20,7 +20,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .get('/login',auth() , (req, res) => {
-    res.render("login",{auth:res.user,})
+    res.render("login",{auth:res.user,avatar:res.user.avatarUrl})
 
     })
     .post('/login', controller.login)
@@ -43,18 +43,19 @@ router.get('/',auth() , (req, res) => {
 
 router.get('/home',auth() , (req, res) => {
 
-    res.render("index",{auth:res.user,})
+    res.render("index",{auth:res.user,avatar:res.user.avatarUrl})
 })
 router.get('/about',auth() , (req, res) => {
 
-    res.render('aboutUs',{auth:res.user,})
+    res.render('aboutUs',{auth:res.user,avatar:res.user.avatarUrl})
 })
 router.get('/catalog',auth() ,(req, res) => {
 
-    res.render("catalog",{auth:res.user,})
+    res.render("catalog",{auth:res.user,avatar:res.user.avatarUrl})
 })
 router.get('/user/profile/:id',auth(),async (req, res) => {
     res.render("personalArea",{
+        avatar:res.user.avatarUrl,
         auth:res.user,
         edit:false,
         pavatarUrl:res.user.avatarUrl,
@@ -77,6 +78,7 @@ router.get('/user/profile/:id',auth(),async (req, res) => {
 router
     .get('/user/edit',auth(),(req, res) => {
         res.render("personalArea",{
+            avatar:res.user.avatarUrl,
             auth:res.user,
             edit:true,
             pavatarUrl:res.user.avatarUrl,
@@ -107,6 +109,7 @@ router
             facebookUrl:req.body.ifacebookUrl
         })
         await res.render("personalArea",{
+            avatar:res.user.avatarUrl,
             auth:res.user,
             edit:false,
             pavatarUrl:res.user.avatarUrl,
