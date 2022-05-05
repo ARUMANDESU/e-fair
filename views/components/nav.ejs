@@ -20,7 +20,7 @@
                     </li>
                     <li class="nav-item">
                         <%if(auth){%>
-                            <a href="/user/profile/1">
+                            <a href="/user/profile/<%-auth.username%>">
                                 <img src="<%-auth.avatarUrl?auth.avatarUrl:""%>" class="rounded-circle" width="72">
                             </a>
                         <%}else{%>

@@ -29,28 +29,36 @@
 
 
     <div class="tab " style="margin-left: 15%; margin-right: 15%">
-        <button class="tablinks" onclick="openTab1(event, 'My Ads')">My Ads</button>
-        <button class="tablinks" onclick="openTab1(event, 'Payments')">Payments</button>
+        <%if(user._id==auth.id){%>
+            <button class="tablinks" onclick="openTab1(event, 'My Ads')"><%-user.username%>'s Ads</button>
+            <button class="tablinks" onclick="openTab1(event, 'Payments')">Payments</button>
+        <%}%>
+
         <button class="tablinks" onclick="openTab1(event, 'Profile')">Profile</button>
         <%admin=false%>
         <%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
-        <%if(admin){%>
-            <button class="tablinks" onclick="openTab1(event, 'Admin')">Admin</button>
+        <%if(user.id==auth._id){%>
+            <%if(admin){%>
+                <button class="tablinks" onclick="openTab1(event, 'Admin')">Admin</button>
+            <%}%>
         <%}%>
+
 
     </div>
 
     <!-- Tab content -->
-    <div id="My Ads" class="tabcontent1">
-        <h3>My Ads</h3>
-        <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'Active')">Active</button>
-            <button class="tablinks" onclick="openTab(event, 'Waiting')">Waiting</button>
-            <button class="tablinks" onclick="openTab(event, 'Unpaid')">Unpaid</button>
-            <button class="tablinks" onclick="openTab(event, 'Inactive')">Inactive</button>
-            <button class="tablinks" onclick="openTab(event, 'Rejected')">Rejected</button>
+    <%if(user.id==user._id){%>
+        <div id="My Ads" class="tabcontent1">
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'Active')">Active</button>
+                <button class="tablinks" onclick="openTab(event, 'Waiting')">Waiting</button>
+                <button class="tablinks" onclick="openTab(event, 'Unpaid')">Unpaid</button>
+                <button class="tablinks" onclick="openTab(event, 'Inactive')">Inactive</button>
+                <button class="tablinks" onclick="openTab(event, 'Rejected')">Rejected</button>
+            </div>
         </div>
-    </div>
+    <%}%>
+
 
     <div id="Payments" class="tabcontent1">
         <h3>Payments</h3>
@@ -66,32 +74,34 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="<%-auth.avatarUrl%>" alt="avatar" class="rounded-circle" width="150">
+                                        <img src="<%-user.avatarUrl%>" alt="avatar" class="rounded-circle" width="150">
                                         <div class="mt-3">
-                                            <h4><%-auth.username%></h4>
-                                            <%if(auth.address){%>
-                                                <p class="text-muted font-size-sm"><%-auth.address%></p>
+                                            <h4><%-user.username%></h4>
+                                            <%if(user.address){%>
+                                                <p class="text-muted font-size-sm"><%-user.address%></p>
                                             <%}%>
+                                            <%if(user.id==auth._id){%>
                                             <button class="btn btn-outline-danger" id="logout">Log out</button>
+                                            <%}%>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mt-3">
                                 <ul class="list-group list-group-flush">
-                                    <%if(auth.twitterUrl){%>
+                                    <%if(user.twitterUrl){%>
                                         <li class="list-group-item d-flex justify-content-center align-items-center flex-wrap">
-                                            <a href="<%-auth.twitterUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</a>
+                                            <a href="<%-user.twitterUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</a>
                                         </li>
                                     <%}%>
-                                    <%if(auth.instagramUrl){%>
+                                    <%if(user.instagramUrl){%>
                                         <li class="list-group-item d-flex justify-content-center align-items-center flex-wrap">
-                                            <a href="<%-auth.instagramUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</a>
+                                            <a href="<%-user.instagramUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</a>
                                         </li>
                                     <%}%>
-                                    <%if(auth.facebookUrl){%>
+                                    <%if(user.facebookUrl){%>
                                         <li class="list-group-item d-flex justify-content-center align-items-center flex-wrap">
-                                            <a  href="<%-auth.facebookUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</a>
+                                            <a  href="<%-user.facebookUrl%>" class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</a>
                                         </li>
                                     <%}%>
                                 </ul>
@@ -100,69 +110,71 @@
                         <div class="col-md-8">
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    <%if(auth.fullname){%>
+                                    <%if(user.fullname){%>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Full Name</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <%-auth.fullname%>
+                                                <%-user.fullname%>
                                             </div>
                                         </div>
                                         <hr>
                                     <%}%>
 
-                                    <%if(auth.email){%>
+                                    <%if(user.email){%>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Email</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <%-auth.email%>
+                                                <%-user.email%>
                                             </div>
                                         </div>
                                         <hr>
                                     <%}%>
 
-                                    <%if(auth.phoneNumber){%>
+                                    <%if(user.phoneNumber){%>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Phone</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <%-auth.phoneNumber%>
+                                                <%-user.phoneNumber%>
                                             </div>
                                         </div>
                                         <hr>
                                     <%}%>
-                                    <%if(auth.address){%>
+                                    <%if(user.address){%>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Address</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <%-auth.address%>
+                                                <%-user.address%>
                                             </div>
                                         </div>
                                         <hr>
                                     <%}%>
-                                    <%if(auth.description){%>
+                                    <%if(user.description){%>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Description</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <%-auth.description%>
+                                                <%-user.description%>
                                             </div>
                                         </div>
                                         <hr>
                                     <%}%>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <a class="btn btn-info " target="__blank" href="/user/edit">Edit</a>
+                                    <%if(user.id==auth._id){%>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a class="btn btn-info " target="__blank" href="/user/edit">Edit</a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <%}%>
+
                                 </div>
                             </div>
 
@@ -186,7 +198,7 @@
         <h3>Profile</h3>
         <div class="container">
             <div class="main-body">
-                <form method="post" action="/user/edit">
+                <form  id="edit"  method="post" action="/user/edit">
                     <div class="row gutters-sm">
 
                         <div class="col-md-4 mb-3">
@@ -198,14 +210,13 @@
                                         <%} else{%>
                                             <img src="/avatars/ecce-homo.jpg" alt="avatar" class="rounded-circle" width="150">
                                         <%}%>
-                                        <input class="form-control" type="file" name="avatar">
+                                        <input class="form-control" type="file" form="edit" id="iavatar" name="iavatar" alt="input avatar" accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/webp">
+
                                         <div class="mt-3">
                                             <h4><%-auth.username%></h4>
                                             <%if(auth.address){%>
                                             <p class="text-muted font-size-sm"><%-auth.address%></p>
                                             <%}%>
-                                            <button class="btn btn-outline-primary">Message</button>
-                                            <button id="left">Left</button>
                                         </div>
                                     </div>
                                 </div>
@@ -233,15 +244,6 @@
                         <div class="col-md-8">
                             <div class="card mb-3">
                                 <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Full Name</h6>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                <input type="text" name="ifullname" class="form-control" value="<%-auth.fullname%>">
-                                            </div>
-                                        </div>
-                                        <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Phone</h6>
@@ -333,11 +335,14 @@
         <%}%>
     </div>
 
-    <%if(admin){%>
-        <div id="Admin" class="tabcontent1">
-            <a href="/users" ><button>All users</button></a>
-        </div>
+    <%if(user.id==auth._id){%>
+        <%if(admin){%>
+            <div id="Admin" class="tabcontent1">
+                <a href="/users" ><button>All users</button></a>
+            </div>
+        <%}%>
     <%}%>
+
 
     <div id="Active" class="tabcontent">
         <h3>Active</h3>
@@ -371,9 +376,7 @@
 <script src="/js/personalArea.js"></script>
 <script>
     document.getElementById("logout").onclick =function () {
-
         window.location.href="/logout"
-
 
     }
 </script>

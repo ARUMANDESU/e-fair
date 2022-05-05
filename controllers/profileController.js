@@ -6,13 +6,18 @@ const {secret} = require("../config");
 
 class profileController{
     async personalAreaGet(req,res){
+
         try{
-            console.log(res.user);
-            res.render("personalArea",{
-                auth:res.user,
-                edit:false,
-                pcomments:[],
+            const userIdName=req.params.id
+            User.findOne({username:userIdName}).exec().then(doc=>{
+                res.render("personalArea",{
+                    auth:res.user,
+                    user:doc,
+                    edit:false,
+                    pcomments:[],
+                })
             })
+
 
         }
         catch (e) {
@@ -26,6 +31,7 @@ class profileController{
             const avatar= res.user ? res.user.avatarUrl:""
             res.render("personalArea",{
                 auth:res.user,
+                user:[],
                 edit:true,
                 pcomments:[],
             })
@@ -38,6 +44,7 @@ class profileController{
 
     async personalAreaEditPost(req,res){
         try {
+
             const token=req.cookies.auth.split(' ')[1]
             if (!token) {
                 return res.status(403).json({message: "User not authorized"})
@@ -51,11 +58,8 @@ class profileController{
                 instagramUrl:req.body.iinstagramUrl,
                 facebookUrl:req.body.ifacebookUrl
             })
-            res.render("personalArea",{
-                auth:res.user,
-                edit:false,
-                pcomments:[],
-            })
+            console.log(req.body)
+            res.render("message",{auth:res.user,message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
         }
         catch (e) {
             console.log(e);

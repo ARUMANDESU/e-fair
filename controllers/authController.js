@@ -108,10 +108,10 @@ class authController{
     async logOut(req,res){
         try {
             res.clearCookie("auth")
-            res.render("message",{auth:res.user,message:"Logout",timeout:300,where:"/home"})
+            res.render("message",{user:res.user,auth:res.user,message:"Logout",timeout:300,where:"/home"})
         } catch (e) {
             console.log(e)
-            return res.status(403).render("message",{auth:res.user,message:"Logout errors",timeout:1500,where:"/home"})
+            return res.status(403).render("message",{user:res.user,auth:res.user,message:"Logout errors",timeout:1500,where:"/home"})
         }
     }
 }
