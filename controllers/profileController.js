@@ -58,7 +58,6 @@ class profileController{
                 instagramUrl:req.body.iinstagramUrl,
                 facebookUrl:req.body.ifacebookUrl
             })
-            console.log(req.body)
             res.render("message",{auth:res.user,message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
         }
         catch (e) {

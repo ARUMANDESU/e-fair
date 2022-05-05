@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/head') %>
+</head>
+<body>
+<%- include('components/nav') %>
+<div class=" container-fluid py-5 d-flex flex-wrap justify-content-center align-items-center " style="background-color: #f2f2f2; border-radius: 67px;">
+    <table class="table  table-hover mx-5">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Phone number</th>
+            <th>Address</th>
+        </tr>
+        <%users.forEach(data=>{%>
+            <tr>
+                <td><a href="/user/profile/<%-data.username%>"><%-data.username%></a></td>
+                <td><%-data.email%></td>
+                <td><%-data.roles%></td>
+                <td><%-data.phoneNumber%></td>
+                <td><%-data.address%></td>
+            </tr>
+        <%})%>
+    </table>
+</div>
+<%- include('components/footer')%>
+</body>
+</html>

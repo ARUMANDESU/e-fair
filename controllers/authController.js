@@ -94,12 +94,11 @@ class authController{
     async getUsers(req, res){
         try{
             const user= await User.find()
-            res.json(user)
+            res.render("users",{auth:res.user,users:user})
             // const userRole =new Role()
             // const adminRole =new Role({value:"ADMIN"})
             // await userRole.save()
             // await adminRole.save()
-            res.json("GET USERS");
         }catch(e){
 
         }

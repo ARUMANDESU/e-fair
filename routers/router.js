@@ -19,16 +19,14 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .get('/login',auth() , (req, res) => {
-        const avatar= res.user ? res.user.avatarUrl:""
-    res.render("login",{auth:res.user,avatar:avatar})
+    res.render("login",{auth:res.user})
 
     })
     .post('/login', authController.login)
 
 router
     .get('/register',auth(), (req, res) => {
-        const avatar= res.user ? res.user.avatarUrl:""
-    res.render("register",{auth:res.user,avatar:avatar})
+    res.render("register",{auth:res.user})
     })
     .post('/register', [
         check('username',"Username cannot be empty").notEmpty(),
@@ -36,7 +34,7 @@ router
     ],authController.register)
 
 router
-    .get("/users"  ,authController.getUsers);
+    .get("/users" ,auth(),roleMiddleware(['ADMIN']) ,authController.getUsers);
 
 router.get('/',auth() , (req, res) => {
     res.redirect("/home");
