@@ -29,7 +29,7 @@ A website where farm food sellers can list their products and users can choose b
     <%- include('components/head') %>
 </head>
 <body>
-    <%- include('components/nav') %>
+    <%- include('components/nav',{avatarUrl:avatar}) %>
 
     <%- include('components/footer')%>
 </body>
