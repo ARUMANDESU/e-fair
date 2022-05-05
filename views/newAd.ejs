@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/head') %>
+
+</head>
+<body>
+<%- include('components/nav') %>
+<div class=" container-fluid py-5 d-flex flex-column flex-wrap  " style="height:800px;background-color: #f2f2f2; border-radius: 67px;">
+    <h1 class="text-center">New Product Ad</h1>
+    <div class="container">
+        <form  action="/newAd" method="post">
+            <div >
+                <ul style="list-style-type: none">
+                    <li>
+                        <div class="container d-flex flex-row">
+                            <h3>Pruduct name</h3>
+                            <input class="form-control" type="text" name="productName">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="container d-flex flex-row">
+                            <h3>Type of Product</h3>
+                            <select name="type" class="form-select" >
+                                <option value="OTHER">Other</option>
+                                <option value="MEAT">Meat</option>
+                                <option value="MILK">Milk</option>
+                                <option value="FRUIT">Fruit</option>
+                                <option value="VEGETABLES">Vegetables</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <input class="form-control" type="file" name="images[]" accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/webp" multiple>
+                    </li>
+                    <li>
+                        <div class="container d-flex flex-row">
+                            <h3>Description</h3>
+                            <textarea class="form-control" type="text" name="productDescription"></textarea>
+                        </div>
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-success">Create new ad</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+<%- include('components/footer')%>
+</body>
+</html>

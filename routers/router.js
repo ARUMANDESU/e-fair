@@ -2,6 +2,7 @@ const express = require('express')
 const router = express()
 const authController =require("../controllers/authController")
 const profileController= require("../controllers/profileController")
+const catalogController = require("../controllers/catalogController")
 const {check, checkSchema} = require("express-validator")
 const authMiddleware = require("../middlewaree/authMiddleware")
 const roleMiddleware= require("../middlewaree/roleMiddleware")
@@ -46,9 +47,12 @@ router.get('/home',auth() , (req, res) => {
 router.get('/about',auth() , (req, res) => {
     res.render('aboutUs',{auth:res.user})
 })
-router.get('/catalog',auth() ,(req, res) => {
-    res.render("catalog",{auth:res.user})
-})
+router
+    .get('/catalog',auth() ,catalogController.catalog)
+
+router
+    .get('/newAd',auth(), catalogController.newAdGet)
+    .post("/newAd",auth(),catalogController.newAdPost)
 
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)

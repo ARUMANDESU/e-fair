@@ -50,7 +50,7 @@ class authController{
                 return res.status(400).render("message",{auth:res.user,message:"errors",timeout:1000,where:"/register"})
             }
             
-            
+
             const candidate =await User.findOne({username})
             if(candidate){
                 return await res.render("message",{auth:res.user,avatar:"",message:"Username already exists",timeout:1000,where:"/register"})
