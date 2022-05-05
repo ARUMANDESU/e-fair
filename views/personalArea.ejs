@@ -32,6 +32,12 @@
         <button class="tablinks" onclick="openTab1(event, 'My Ads')">My Ads</button>
         <button class="tablinks" onclick="openTab1(event, 'Payments')">Payments</button>
         <button class="tablinks" onclick="openTab1(event, 'Profile')">Profile</button>
+        <%admin=false%>
+        <%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
+        <%if(admin){%>
+            <button class="tablinks" onclick="openTab1(event, 'Admin')">Admin</button>
+        <%}%>
+
     </div>
 
     <!-- Tab content -->
@@ -327,8 +333,11 @@
         <%}%>
     </div>
 
-
-
+    <%if(admin){%>
+        <div id="Admin" class="tabcontent1">
+            <a href="/users" ><button>All users</button></a>
+        </div>
+    <%}%>
 
     <div id="Active" class="tabcontent">
         <h3>Active</h3>

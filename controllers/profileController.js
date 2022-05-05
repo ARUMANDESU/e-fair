@@ -7,6 +7,7 @@ const {secret} = require("../config");
 class profileController{
     async personalAreaGet(req,res){
         try{
+            console.log(res.user);
             res.render("personalArea",{
                 auth:res.user,
                 edit:false,
