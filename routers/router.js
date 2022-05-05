@@ -54,6 +54,9 @@ router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
 router
     .get('/user/edit',auth(),profileController.personalAreaEditGet)
-    .post('/user/edit',auth(), upload.single("iavatar"),profileController.personalAreaEditPost)
+    .post('/user/edit',auth(),profileController.personalAreaEditPost)
+router
+    .get('/user/edit/ava',auth(),profileController.personalAreaEditAvaGet)
+    .post('/user/edit/ava',auth(),upload.single("iavatar"),profileController.personalAreaEditAvaPost)
 router.get('/logout',authController.logOut)
 module.exports= router;

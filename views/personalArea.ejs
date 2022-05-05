@@ -170,7 +170,7 @@
                                     <%if(user.id==auth._id){%>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <a class="btn btn-info " target="__blank" href="/user/edit">Edit</a>
+                                                <a class="btn btn-success " target="__blank" href="/user/edit">Edit</a>
                                             </div>
                                         </div>
                                     <%}%>
@@ -210,10 +210,9 @@
                                         <%} else{%>
                                             <img src="/avatars/ecce-homo.jpg" alt="avatar" class="rounded-circle" width="150">
                                         <%}%>
-                                        <form method="post" action="/user/edit" enctype="multipart/form-data">
-                                            <input class="form-control" type="file"  id="iavatar" name="iavatar" alt="input avatar" accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/webp">
-                                            <input class="btn btn-success" type="submit" value="change">
-                                        </form>
+                                            <a href="/user/edit/ava">
+                                                <input class="btn btn-success" type="submit" value="change">
+                                            </a>
 
                                         <div class="mt-3">
                                             <h4><%-auth.username%></h4>
@@ -311,7 +310,7 @@
                                         <div class="row">
                                             <div class="col-sm-3"></div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input type="submit" class="btn btn-primary px-4" href="edit" value="Save Changes">
+                                                <input type="submit" form="edit" class="btn btn-success px-4" value="Save Changes">
                                             </div>
                                         </div>
 

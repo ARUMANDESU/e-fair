@@ -32,7 +32,6 @@ class profileController{
 
     async personalAreaEditGet(req,res){
         try{
-            const avatar= res.user ? res.user.avatarUrl:""
             res.render("personalArea",{
                 auth:res.user,
                 user:[],
@@ -47,6 +46,42 @@ class profileController{
     }
 
     async personalAreaEditPost(req,res){
+        try {
+            const token=req.cookies.auth.split(' ')[1]
+            if (!token) {
+                return res.status(403).json({message: "User not authorized"})
+            }
+            const u = jwt.verify(token, process.env.secret)
+
+            const user = await User.updateOne({_id:u.id},{
+                phoneNumber:req.body.iphonenumber,
+                address:req.body.iaddress,
+                description:req.body.idescription,
+                twitterUrl:req.body.itwitterUrl,
+                instagramUrl:req.body.iinstagramUrl,
+                facebookUrl:req.body.ifacebookUrl
+            })
+            res.render("message",{auth:res.user,message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:2000,where:`/user/edit`})
+        }
+    }
+
+    async personalAreaEditAvaGet(req,res){
+        try{
+            res.render("changeAva",{
+                auth:res.user,
+            })
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).json({message:"Error"})
+        }
+    }
+
+    async personalAreaEditAvaPost(req,res){
         try {
             cloudinary.config({
                 cloud_name:process.env.cloudinary_cloud_name,
@@ -66,12 +101,6 @@ class profileController{
             const result = await cloudinary.uploader.upload(req.file.path,{folder:"avatars",transformation: [{width: 250, height: 250, crop: "thumb"}]});
             const user = await User.updateOne({_id:u.id},{
                 avatarUrl:result.secure_url,
-                phoneNumber:req.body.iphonenumber,
-                address:req.body.iaddress,
-                description:req.body.idescription,
-                twitterUrl:req.body.itwitterUrl,
-                instagramUrl:req.body.iinstagramUrl,
-                facebookUrl:req.body.ifacebookUrl
             })
             res.render("message",{auth:res.user,message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
         }
