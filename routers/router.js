@@ -9,7 +9,7 @@ const auth =require("../middlewaree/auth")
 const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
 const Uuid =require("uuid")
-const mongoose = require('mongoose');
+const upload = require("../utils/multer");
 
 router.use(cookieParser())
 
@@ -54,6 +54,6 @@ router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
 router
     .get('/user/edit',auth(),profileController.personalAreaEditGet)
-    .post('/user/edit',auth(),profileController.personalAreaEditPost)
+    .post('/user/edit',auth(), upload.single("iavatar"),profileController.personalAreaEditPost)
 router.get('/logout',authController.logOut)
 module.exports= router;

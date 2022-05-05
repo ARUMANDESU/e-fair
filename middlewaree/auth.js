@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const {secret} = require('../config')
 const User = require("../modules/User")
 const Role = require("../modules/Role")
 
@@ -14,7 +13,7 @@ module.exports = function () {
                 if (!token) {
                     return res.status(403).json({message: "User not authorized"})
                 }
-                const user = jwt.verify(token, secret)
+                const user = jwt.verify(token, process.env.secret)
                 res.user= await User.findById(user.id)
                 next();
             } catch (e) {

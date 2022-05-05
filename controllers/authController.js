@@ -3,7 +3,6 @@ const Role = require("../modules/Role")
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const {validationResult} =require("express-validator");
-const {secret}= require("../config")
 
 
 
@@ -17,7 +16,7 @@ const generateAccessToken = (id,role)=>{
         id,
         role
     }
-    return jwt.sign(payload,secret,{expiresIn:"24h"})
+    return jwt.sign(payload,process.env.secret,{expiresIn:"24h"})
 }
 
 class authController{
@@ -82,7 +81,8 @@ class authController{
                 return res.status(400).render("message",{auth:res.user,message:"Wrong password",timeout:1000,where:"/login"})
             }
             const token =generateAccessToken(user._id,user.roles);
-            res.cookie("auth",'Bearer '+ token).then(res.render("message",{auth:res.user,message:"You successfully logged in",timeout:500,where:"/home"})).after(setTimeout(()=>{res.redirect("/home")},5000) )
+            res.cookie("auth",'Bearer '+ token)
+            res.render("message",{auth:res.user,message:"You successfully logged in",timeout:500,where:"/home"})
 
 
         }catch(e){
