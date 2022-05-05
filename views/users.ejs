@@ -16,7 +16,7 @@
         </tr>
         <%users.forEach(data=>{%>
             <tr>
-                <td><a href="/user/profile/<%-data.username%>"><%-data.username%></a></td>
+                <td> <a class="text pl-5" href="/user/profile/<%-data.username%>"><img class="rounded-circle" width="100" src="<%-data.avatarUrl%>"><%-data.username%></a></td>
                 <td><%-data.email%></td>
                 <td><%-data.roles%></td>
                 <td><%-data.phoneNumber%></td>
