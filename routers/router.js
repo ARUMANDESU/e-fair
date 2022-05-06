@@ -55,12 +55,15 @@ router
     .post("/newAd",auth(),catalogController.newAdPost)
 router
     .get('/product/:id',auth(),catalogController.productPage)
-
+router
+    .get('/allProducts',auth(),roleMiddleware(['ADMIN']),catalogController.allProducts)
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
 router
     .get('/user/edit',auth(),profileController.personalAreaEditGet)
     .post('/user/edit',auth(),profileController.personalAreaEditPost)
+router
+    .post('/catalog/remove/:id',auth(),catalogController.removeProduct)
 router
     .get('/user/edit/ava',auth(),profileController.personalAreaEditAvaGet)
     .post('/user/edit/ava',auth(),upload.single("iavatar"),profileController.personalAreaEditAvaPost)

@@ -55,9 +55,8 @@ class catalogController{
                 }
                 const images=[]
                 if(files.images.size!=0){
-                    console.log(JSON.stringify(files.images) )
                     for(let k=0;k<files.images.length;k++){
-                        const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product/${fields.productName}`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
+                        const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
                         images[k]={public_id:result.public_id,path: result.secure_url}
                     }
                 }
@@ -82,7 +81,7 @@ class catalogController{
     async productPage(req,res){
         try{
             const productIdName=req.params.id
-            Product.findOne({id:productIdName}).exec().then(doc=>{
+            Product.findById(productIdName).exec().then(doc=>{
                 res.render("productPage",{
                     auth:res.user,
                     product:doc,
@@ -92,6 +91,40 @@ class catalogController{
         catch (e){
             console.log(e);
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/home"})
+        }
+    }
+    async allProducts(req,res){
+        try{
+            const product =await Product.find()
+            res.render('allProducts',{auth:res.user,products:product})
+        }
+        catch (e) {
+
+        }
+    }
+    async removeProduct(req,res){
+        try{
+            cloudinary.config({
+                cloud_name:process.env.cloudinary_cloud_name,
+                api_key:process.env.cloudinary_api_key,
+                api_secret:process.env.cloudinary_api_secret
+            })
+
+
+            const productIdName=req.params.id
+            const product = await Product.findById(productIdName)
+            product.images.forEach(async (data)=>{
+                if(data.public_id!="Product/No_image_3x4.svg_dj7xfv"){
+                    const deleteResult= await  cloudinary.uploader.destroy(`${data.public_id}`);
+                }
+            })
+            const deleteProduct =await Product.deleteOne({_id:productIdName})
+            res.render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/allProducts`})
+
+        }
+        catch (e){
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/allProducts"})
         }
     }
 

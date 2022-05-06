@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/head') %>
+</head>
+<body>
+<%- include('components/nav' )%>
+<div class=" container-fluid py-5 d-flex flex-wrap justify-content-center align-items-center " style="background-color: #f2f2f2; border-radius: 67px;">
+    <table class="table  table-hover mx-5">
+        <tr>
+            <th>Product name</th>
+            <th>Owner id</th>
+            <th>Type</th>
+            <th>Edit</th>
+        </tr>
+        <%products.forEach(data=>{%>
+        <tr>
+            <td> <a class="text pl-5" href="/product/<%-data.id%>"><h3><%-data.name%></h3></a></td>
+            <td><a><h3><%-data.ownerID%></h3></a></td>
+            <td><%-data.type%></td>
+            <td>
+                <form method="post" action="/catalog/remove/<%-data.id%>">
+                    <button type="submit" class="btn btn-danger">remove</button>
+                </form>
+            </td>
+        </tr>
+        <%})%>
+    </table>
+</div>
+<%- include('components/footer')%>
+</body>
+</html>
