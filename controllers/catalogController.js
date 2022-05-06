@@ -6,6 +6,8 @@ const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const {query} = require("express-validator");
 const cloudinary = require("cloudinary").v2;
+const formidable = require("formidable")
+
 
 class catalogController{
     async catalog(req,res){
@@ -37,20 +39,48 @@ class catalogController{
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/home"})
         }
     }
-    async newAdPost(req, res){
+    async newAdPost(req, res,next){
         try {
-            // const token=req.cookies.auth.split(' ')[1]
-            // if (!token) {
-            //     return res.status(403).json({message: "User not authorized"})
-            // }
-            // const user = jwt.verify(token, process.env.secret)
-            const productType = await Type.findOne({value:`${req.body.type}`})
-            console.log(req.body.type)
-            const  product= new Product({name:req.body.productName,ownerUsername:res.user.username,ownerID:res.user.id,description:req.body.productDescription,type:[productType.value]})
-            product.save();
-            res.render("message",{auth:res.user,message:"Created",timeout:100,where:`/user/profile/${res.user.username}`})
+            cloudinary.config({
+                cloud_name:process.env.cloudinary_cloud_name,
+                api_key:process.env.cloudinary_api_key,
+                api_secret:process.env.cloudinary_api_secret
+            })
+            const form = formidable({ multiples: true });
+
+            form.parse(req, async (err, fields, files) => {
+                if (err) {
+                    next(err)
+                    return;
+                }
+                const images=[]
+                for(let k=0;k<files.images.length;k++){
+                    const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product/${fields.productName}`,transformation: [{width: 1800, height: 1800, crop: "thumb"}]});
+                    images[k]={public_id:result.public_id,path: result.secure_url}
+                }
+                const productType = await Type.findOne({value:`${fields.type}`})
+
+                const  product= new Product({name:fields.productName,ownerID:res.user.id,description:fields.productDescription,type:[productType.value],images:images})
+                product.save();
+                res.render("message",{auth:res.user,message:"Created",timeout:100,where:`/user/profile/${res.user.username}`})
+            });
         }
         catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/home"})
+        }
+    }
+    async productPage(req,res){
+        try{
+            const productIdName=req.params.id
+            Product.findOne({id:productIdName}).exec().then(doc=>{
+                res.render("productPage",{
+                    auth:res.user,
+                    product:doc,
+                })
+            })
+        }
+        catch (e){
             console.log(e);
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/home"})
         }

@@ -22,6 +22,7 @@ module.exports = function () {
             }
         }
         else{
+            res.user =[];
             next();
         }
 

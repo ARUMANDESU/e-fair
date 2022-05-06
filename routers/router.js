@@ -53,6 +53,8 @@ router
 router
     .get('/newAd',auth(), catalogController.newAdGet)
     .post("/newAd",auth(),catalogController.newAdPost)
+router
+    .get('/product/:id',auth(),catalogController.productPage)
 
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
