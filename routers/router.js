@@ -19,7 +19,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 
 router
-    .get('/login',auth() , (req, res) => {
+    .get('/login' , (req, res) => {
     res.render("login",{auth:res.user})
 
     })

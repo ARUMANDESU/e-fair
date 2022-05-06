@@ -54,10 +54,19 @@ class catalogController{
                     return;
                 }
                 const images=[]
-                for(let k=0;k<files.images.length;k++){
-                    const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product/${fields.productName}`,transformation: [{width: 1800, height: 1800, crop: "thumb"}]});
-                    images[k]={public_id:result.public_id,path: result.secure_url}
+                if(files.images.size!=0){
+                    console.log(JSON.stringify(files.images) )
+                    for(let k=0;k<files.images.length;k++){
+                        const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product/${fields.productName}`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
+                        images[k]={public_id:result.public_id,path: result.secure_url}
+                    }
                 }
+                else{
+                    images[0]={public_id:"Product/No_image_3x4.svg_dj7xfv",path:"https://res.cloudinary.com/nezz/image/upload/v1651846941/Product/No_image_3x4.svg_dj7xfv.png"}
+                }
+
+
+
                 const productType = await Type.findOne({value:`${fields.type}`})
 
                 const  product= new Product({name:fields.productName,ownerID:res.user.id,description:fields.productDescription,type:[productType.value],images:images})

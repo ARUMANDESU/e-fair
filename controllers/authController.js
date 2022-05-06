@@ -84,7 +84,6 @@ class authController{
             res.cookie("auth",'Bearer '+ token)
             res.render("message",{auth:res.user,message:"You successfully logged in",timeout:500,where:"/home"})
 
-
         }catch(e){
             console.log(e);
             res.status(400).render("message",{auth:res.user,message:"Login error",timeout:700,where:"/login"})
