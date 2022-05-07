@@ -41,15 +41,14 @@ router.get('/',auth() , (req, res) => {
     res.redirect("/home");
 })
 
-router.get('/home',auth() , (req, res) => {
-    res.render("index",{auth:res.user})
-})
+router.get('/home',auth() ,catalogController.home)
 router.get('/about',auth() , (req, res) => {
     res.render('aboutUs',{auth:res.user})
 })
 router
     .get('/catalog',auth() ,catalogController.catalog)
-
+router
+    .get('/catalog/:type/page/:page',auth(),catalogController.catalogType)
 router
     .get('/newAd',auth(), catalogController.newAdGet)
     .post("/newAd",auth(),catalogController.newAdPost)

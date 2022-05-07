@@ -1,5 +1,6 @@
 const User = require("../modules/User")
 const Role = require("../modules/Role")
+const Product = require("../modules/Product")
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const cloudinary = require("cloudinary").v2;
@@ -13,11 +14,14 @@ class profileController{
 
         try{
             const userIdName=req.params.id
-            User.findOne({username:userIdName}).exec().then(doc=>{
+
+            User.findOne({username:userIdName}).exec().then( async doc=>{
+                const product= await Product.find({ownerID:doc.id})
                 res.render("personalArea",{
                     auth:res.user,
                     user:doc,
                     edit:false,
+                    product:product,
                     pcomments:[],
                 })
             })
@@ -26,7 +30,7 @@ class profileController{
         }
         catch (e) {
             console.log(e);
-            res.status(400).json({message:"Error"})
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
         }
     }
 
@@ -41,7 +45,7 @@ class profileController{
         }
         catch (e) {
             console.log(e);
-            res.status(400).json({message:"Error"})
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/user/${res.user.username}`})
         }
     }
 

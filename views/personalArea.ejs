@@ -52,7 +52,6 @@
             <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'Active')">Active</button>
                 <button class="tablinks" onclick="openTab(event, 'Waiting')">Waiting</button>
-                <button class="tablinks" onclick="openTab(event, 'Unpaid')">Unpaid</button>
                 <button class="tablinks" onclick="openTab(event, 'Inactive')">Inactive</button>
                 <button class="tablinks" onclick="openTab(event, 'Rejected')">Rejected</button>
             </div>
@@ -349,30 +348,86 @@
 
 
     <div id="Active" class="tabcontent">
-        <h3>Active</h3>
-        <h1 class="noAds">No Ads</h1>
+        <%if(!product){%>
+            <h1 class="noAds">No Ads</h1>
+        <%}else {%>
+            <ul>
+                <%empty=true%>
+                <%product.forEach(data=>{%>
+
+                    <%if(data.status=="ACTIVE"){%>
+                        <%empty=false%>
+                        <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
+                    <%}%>
+                <%})%>
+                <%if(empty==true){%>
+                    <h1 class="noAds">No Ads</h1>
+                <%}%>
+            </ul>
+        <%}%>
         <a href="/newAd"><button class="btn btn-success"> Submit an ad </button></a>
 
     </div>
 
     <div id="Waiting" class="tabcontent">
-        <h3>Waiting</h3>
-        <p>text</p>
+        <%if(!product){%>
+            <h1 class="noAds">No Ads</h1>
+        <%}else {%>
+        <ul>
+            <%empty=true%>
+            <%product.forEach(data=>{%>
+
+            <%if(data.status=="WAITING"){%>
+            <%empty=false%>
+            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
+            <%}%>
+            <%})%>
+            <%if(empty==true){%>
+                <h1 class="noAds">No Ads</h1>
+            <%}%>
+        </ul>
+        <%}%>
     </div>
 
-    <div id="Unpaid" class="tabcontent">
-        <h3>Unpaid</h3>
-        <p>text</p>
-    </div>
 
     <div id="Inactive" class="tabcontent">
-        <h3>Inactive</h3>
-        <p>text</p>
+        <%if(!product){%>
+            <h1 class="noAds">No Ads</h1>
+        <%}else {%>
+        <ul>
+            <%empty=true%>
+            <%product.forEach(data=>{%>
+
+            <%if(data.status=="INACTIVE"){%>
+            <%empty=false%>
+            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
+            <%}%>
+            <%})%>
+            <%if(empty==true){%>
+                <h1 class="noAds">No Ads</h1>
+            <%}%>
+        </ul>
+        <%}%>
     </div>
 
     <div id="Rejected" class="tabcontent">
-        <h3>Rejected</h3>
-        <p>text</p>
+        <%if(!product){%>
+            <h1 class="noAds">No Ads</h1>
+        <%}else {%>
+        <ul>
+            <%empty=true%>
+            <%product.forEach(data=>{%>
+
+            <%if(data.status=="REJECTED"){%>
+            <%empty=false%>
+            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
+            <%}%>
+            <%})%>
+            <%if(empty==true){%>
+                <h1 class="noAds">No Ads</h1>
+            <%}%>
+        </ul>
+        <%}%>
     </div>
 </div>
 </div>

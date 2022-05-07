@@ -9,6 +9,8 @@ const Product= new Schema({
     }],
     description:{type:String, unique:false,required:false},
     type:[{type:String, ref:'Type'}],
+    status:{type:String, ref:'Status'},
+    rating:{type:Number,unique:false,required:false},
 })
 
 module.exports= model("Product",Product)

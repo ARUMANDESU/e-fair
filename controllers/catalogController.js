@@ -2,6 +2,7 @@ const User = require("../modules/User")
 const Role = require("../modules/Role")
 const Type = require("../modules/Type")
 const Product = require("../modules/Product")
+const Status = require("../modules/Status")
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const {query} = require("express-validator");
@@ -12,17 +13,25 @@ const formidable = require("formidable")
 class catalogController{
     async catalog(req,res){
         try{
-            const otherType =new Type()
-            const meatType =new Type({value:"MEAT"})
-            const milkType =new Type({value:"MILK"})
-            const fruitType =new Type({value:"FRUIT"})
-            const vegetablesType =new Type({value:"VEGETABLES"})
-
-            await otherType.save()
-            await meatType.save()
-            await milkType.save()
-            await fruitType.save()
-            await vegetablesType.save()
+            // const Active =new Status({value:'ACTIVE'})
+            // const Waiting =new Status()
+            // const Inactive =new Status({value:'INACTIVE'})
+            // const Rejected =new Status({value:'REJECTED'})
+            // await Active.save()
+            // await Waiting.save()
+            // await Inactive.save()
+            // await Rejected.save()
+            // const otherType =new Type()
+            // const meatType =new Type({value:"MEAT"})
+            // const milkType =new Type({value:"MILK"})
+            // const fruitType =new Type({value:"FRUIT"})
+            // const vegetablesType =new Type({value:"VEGETABLES"})
+            //
+            // await otherType.save()
+            // await meatType.save()
+            // await milkType.save()
+            // await fruitType.save()
+            // await vegetablesType.save()
             res.render("catalog",{auth:res.user})
         }
         catch (e) {
@@ -67,8 +76,8 @@ class catalogController{
 
 
                 const productType = await Type.findOne({value:`${fields.type}`})
-
-                const  product= new Product({name:fields.productName,ownerID:res.user.id,description:fields.productDescription,type:[productType.value],images:images})
+                const productStatus = await Status.findOne({value:"WAITING"})
+                const  product= new Product({name:fields.productName,ownerID:res.user.id,description:fields.productDescription,type:[productType.value],images:images,status:productStatus.value,rating:2.5})
                 product.save();
                 res.render("message",{auth:res.user,message:"Created",timeout:100,where:`/user/profile/${res.user.username}`})
             });
@@ -95,8 +104,12 @@ class catalogController{
     }
     async allProducts(req,res){
         try{
+            const productAndUser=[]
             const product =await Product.find()
-            res.render('allProducts',{auth:res.user,products:product})
+            for(let k=0;k<product.length;k++){
+                productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
+            }
+            res.render('allProducts',{auth:res.user,products:productAndUser})
         }
         catch (e) {
 
@@ -125,6 +138,38 @@ class catalogController{
         catch (e){
             console.log(e);
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/allProducts"})
+        }
+    }
+    async home(req,res){
+        try {
+            const product= await Product.find({status:"ACTIVE"}).sort({rating:-1}).limit(8)
+
+            res.render("index",{auth:res.user,product:product})
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:100000,where:""})
+        }
+    }
+    async catalogType(req,res){
+        try{
+            const typeName=req.params.type
+            const pageNum= req.params.page
+            const start=(pageNum-1)*20
+            Product.find({type:typeName.toUpperCase()}).exec().then( async doc=>{
+                console.log(doc)
+                res.render("catalogType",{
+                    auth:res.user,
+                    product:doc,
+                    start:start,
+                })
+            })
+
+
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
         }
     }
 

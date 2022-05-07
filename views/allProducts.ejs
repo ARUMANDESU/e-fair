@@ -9,17 +9,19 @@
     <table class="table  table-hover mx-5">
         <tr>
             <th>Product name</th>
-            <th>Owner id</th>
+            <th>Owner username</th>
             <th>Type</th>
+            <th>Status</th>
             <th>Edit</th>
         </tr>
         <%products.forEach(data=>{%>
         <tr>
-            <td> <a class="text pl-5" href="/product/<%-data.id%>"><h3><%-data.name%></h3></a></td>
-            <td><a><h3><%-data.ownerID%></h3></a></td>
-            <td><%-data.type%></td>
+            <td> <a class="text pl-5" href="/product/<%-data.product.id%>"><h3><%-data.product.name%></h3></a></td>
+            <td> <a class="text pl-5" href="/user/profile/<%-data.user.username%>"><img class="rounded-circle" width="65" src="<%-data.user.avatarUrl%>"><%-data.user.username%></a></td>
+            <td><%-data.product.type%></td>
+            <td><%-data.product.status%></td>
             <td>
-                <form method="post" action="/catalog/remove/<%-data.id%>">
+                <form method="post" action="/catalog/remove/<%-data.product.id%>">
                     <button type="submit" class="btn btn-danger">remove</button>
                 </form>
             </td>

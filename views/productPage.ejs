@@ -8,8 +8,8 @@
 
 <div class="container-fluid sections" >
     <div class="container py-5 h-100 inSections">
-        <h1 class="text-center"><%-product.name%></h1>
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <h1 class="text-center m-5"><%-product.name%></h1>
+        <div id="carouselExampleIndicators" class="carousel slide my-5" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <%for(let k=0;k<product.images.length;k++){%>
                     <%if(k==0){%>
@@ -44,8 +44,11 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <button class="btn btn-success"> add to card</button>
-        <div>
+        <div class="d-flex justify-content-end my-5">
+            <button class="btn btn-success btn-lg"> add to card</button>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center my-5">
             <h1 class="text-center">Description</h1>
             <p><%-product.description%></p>
         </div>
