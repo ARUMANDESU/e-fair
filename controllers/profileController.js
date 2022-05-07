@@ -113,5 +113,35 @@ class profileController{
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:2000,where:`/user/edit`})
         }
     }
+    async deleteUser(req,res){
+        try{
+            const deleteUser = await User.deleteOne({username:req.params.user})
+            res.status(400).render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/users/1`})
+
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:2000,where:`/user/edit`})
+        }
+    }
+    async assignRole(req,res){
+        try{
+            const username=req.params.user
+            const roleToAssign =req.params.role
+            if(roleToAssign=="admin"){
+                await User.findOneAndUpdate({username:username},{roles:['USER','ADMIN']})
+            }
+            else if(roleToAssign=="user"){
+                await User.findOneAndUpdate({username:username},{roles:['USER']})
+            }
+
+            res.status(400).render("message",{auth:res.user,message:"Changed",timeout:1000,where:`/users/1`})
+
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:2000,where:`/user/edit`})
+        }
+    }
 }
 module.exports =new profileController();

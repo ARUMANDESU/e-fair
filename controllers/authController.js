@@ -92,8 +92,18 @@ class authController{
     
     async getUsers(req, res){
         try{
-            const user= await User.find()
-            res.render("users",{auth:res.user,users:user})
+
+            const user= await User.find().sort({roles:1})
+            const pageNum=req.params.page
+            const start=(pageNum-1)*20
+            const end= user.length
+            res.render("users",{
+                auth:res.user,
+                users:user,
+                start:start,
+                end:end,
+                page:pageNum,
+            })
             // const userRole =new Role()
             // const adminRole =new Role({value:"ADMIN"})
             // await userRole.save()

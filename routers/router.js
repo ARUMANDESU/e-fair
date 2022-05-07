@@ -35,7 +35,7 @@ router
     ],authController.register)
 
 router
-    .get("/users" ,auth(),roleMiddleware(['ADMIN']) ,authController.getUsers);
+    .get("/users/:page" ,auth(),roleMiddleware(['ADMIN']) ,authController.getUsers);
 
 router.get('/',auth() , (req, res) => {
     res.redirect("/home");
@@ -55,12 +55,16 @@ router
 router
     .get('/product/:id',auth(),catalogController.productPage)
 router
-    .get('/allProducts',auth(),roleMiddleware(['ADMIN']),catalogController.allProducts)
+    .get('/allProducts/:page',auth(),roleMiddleware(['ADMIN']),catalogController.allProducts)
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
 router
     .get('/user/edit',auth(),profileController.personalAreaEditGet)
     .post('/user/edit',auth(),profileController.personalAreaEditPost)
+router
+    .post('/users/delete/:user',auth(),roleMiddleware(['ADMIN']),profileController.deleteUser)
+    .post('/users/make/:user/:role',auth(),roleMiddleware(['ADMIN']),profileController.assignRole)
+    .post('/users/make/:user/:role',auth(),roleMiddleware(['ADMIN']),profileController.assignRole)
 router
     .post('/catalog/remove/:id',auth(),catalogController.removeProduct)
 router

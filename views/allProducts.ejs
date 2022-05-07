@@ -12,22 +12,34 @@
             <th>Owner username</th>
             <th>Type</th>
             <th>Status</th>
+            <th>Rating</th>
             <th>Edit</th>
         </tr>
-        <%products.forEach(data=>{%>
+        <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
         <tr>
-            <td> <a class="text pl-5" href="/product/<%-data.product.id%>"><h3><%-data.product.name%></h3></a></td>
-            <td> <a class="text pl-5" href="/user/profile/<%-data.user.username%>"><img class="rounded-circle" width="65" src="<%-data.user.avatarUrl%>"><%-data.user.username%></a></td>
-            <td><%-data.product.type%></td>
-            <td><%-data.product.status%></td>
+            <td> <a class="text pl-5" href="/product/<%-products[k].product.id%>"><h3><%-products[k].product.name%></h3></a></td>
+            <td> <a class="text pl-5" href="/user/profile/<%-products[k].user.username%>"><img class="rounded-circle" width="65" src="<%-products[k].user.avatarUrl%>"><%-products[k].user.username%></a></td>
+            <td><%-products[k].product.type%></td>
+            <td><%-products[k].product.status%></td>
+            <td><%-products[k].product.rating%></td>
             <td>
-                <form method="post" action="/catalog/remove/<%-data.product.id%>">
+                <form method="post" action="/catalog/remove/<%-products[k].product.id%>">
                     <button type="submit" class="btn btn-danger">remove</button>
                 </form>
             </td>
         </tr>
-        <%})%>
+        <%}%>
+
     </table>
+    <div class="d-flex flex-row justify-content-center">
+        <%if(page!=1){%>
+        <a href="allProducts/<%-page-1%>"><button class="btn btn-sm btn-secondary"><%-page-1%></button></a>
+        <%}%>
+        <a><button class="btn btn-sm btn-secondary"><%-page%></button></a>
+        <%if(end-start>20){%>
+        <a href="allProducts/<%-page+1%>"><button class="btn btn-sm btn-secondary"><%-page+1%></button></a>
+        <%}%>
+    </div>
 </div>
 <%- include('components/footer')%>
 </body>

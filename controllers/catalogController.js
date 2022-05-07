@@ -128,7 +128,16 @@ class catalogController{
             for(let k=0;k<product.length;k++){
                 productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
             }
-            res.render('allProducts',{auth:res.user,products:productAndUser})
+            const pageNum= req.params.page
+            const start=(pageNum-1)*20
+            const end= productAndUser.length
+            res.render('allProducts',{
+                auth:res.user,
+                products:productAndUser,
+                start:start,
+                end:end,
+                page:pageNum,
+            })
         }
         catch (e) {
 
