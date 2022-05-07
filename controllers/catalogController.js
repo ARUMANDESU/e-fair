@@ -32,7 +32,26 @@ class catalogController{
             // await milkType.save()
             // await fruitType.save()
             // await vegetablesType.save()
-            res.render("catalog",{auth:res.user})
+            try{
+                const pageNum= req.params.page
+                const start=(pageNum-1)*20
+                Product.find().exec().then( async doc=>{
+                    const end = doc.length;
+                    res.render("catalog",{
+                        auth:res.user,
+                        product:doc,
+                        start:start,
+                        end:end,
+                        page:pageNum,
+                    })
+                })
+
+
+            }
+            catch (e) {
+                console.log(e);
+                res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
+            }
         }
         catch (e) {
             console.log(e);
@@ -157,11 +176,14 @@ class catalogController{
             const pageNum= req.params.page
             const start=(pageNum-1)*20
             Product.find({type:typeName.toUpperCase()}).exec().then( async doc=>{
-                console.log(doc)
+                const end = doc.length;
                 res.render("catalogType",{
                     auth:res.user,
                     product:doc,
                     start:start,
+                    end:end,
+                    page:pageNum,
+                    type:typeName
                 })
             })
 

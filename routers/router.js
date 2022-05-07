@@ -46,7 +46,7 @@ router.get('/about',auth() , (req, res) => {
     res.render('aboutUs',{auth:res.user})
 })
 router
-    .get('/catalog',auth() ,catalogController.catalog)
+    .get('/catalog/:page',auth() ,catalogController.catalog)
 router
     .get('/catalog/:type/page/:page',auth(),catalogController.catalogType)
 router

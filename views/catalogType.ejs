@@ -10,13 +10,29 @@
         <div class="container" id="top" style="margin-top: 150px;">
 
                 <div class="d-flex flex-row flex-wrap justify-content-center">
-                    
-                    <%-product[k]%>
+                    <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
+                        <div class="col-3 item m-2">
+                            <a  href="/product/<%-product[k].id%>">
+                                <img class="img-fluid" src="<%-product[k].images[0].path%>">
+                                <div class="text-center d-flex flex-column">
+                                    <b><%-product[k].name%></b>
+                                    <p><%-product[k].type.toString().toLowerCase()%></p>
+                                </div>
+                            </a>
+                        </div>
+                    <%}%>
+
                 </div>
 
         </div>
-        <div>
-            <a href=""></a>
+        <div class="d-flex flex-row justify-content-center">
+            <%if(page!=1){%>
+                <a href="/catalog/<%-type%>/page/<%-page-1%>"><button class="btn btn-sm btn-secondary"><%-page-1%></button></a>
+            <%}%>
+            <a><button class="btn btn-sm btn-secondary"><%-page%></button></a>
+            <%if(end-start>20){%>
+            <a href="/catalog/<%-type%>/page/<%-page+1%>"><button class="btn btn-sm btn-secondary"><%-page+1%></button></a>
+            <%}%>
         </div>
 
     </section>
