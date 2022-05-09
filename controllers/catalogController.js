@@ -83,20 +83,26 @@ class catalogController{
                 }
                 const images=[]
                 if(files.images.size!=0){
-                    for(let k=0;k<files.images.length;k++){
-                        const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
-                        images[k]={public_id:result.public_id,path: result.secure_url}
+                    if(typeof files.images=="object"){
+                        const result = await cloudinary.uploader.upload(files.images.filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
+                        images[0]={public_id:result.public_id,path: result.secure_url}
                     }
+                    else{
+                        for(let k=0;k<files.images.length;k++){
+                            const result = await cloudinary.uploader.upload(files.images[k].filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
+                            images[k]={public_id:result.public_id,path: result.secure_url}
+
+                        }
+                    }
+
                 }
                 else{
                     images[0]={public_id:"Product/No_image_3x4.svg_dj7xfv",path:"https://res.cloudinary.com/nezz/image/upload/v1651846941/Product/No_image_3x4.svg_dj7xfv.png"}
                 }
 
-
-
                 const productType = await Type.findOne({value:`${fields.type}`})
                 const productStatus = await Status.findOne({value:"WAITING"})
-                const  product= new Product({name:fields.productName,ownerID:res.user.id,description:fields.productDescription,type:[productType.value],images:images,status:productStatus.value,rating:2.5})
+                const product= new Product({name:fields.productName,ownerID:res.user.id,cost:fields.cost,description:fields.productDescription,type:[productType.value],images:images,status:productStatus.value,rating:2.5})
                 product.save();
                 res.render("message",{auth:res.user,message:"Created",timeout:100,where:`/user/profile/${res.user.username}`})
             });
