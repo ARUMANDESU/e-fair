@@ -86,7 +86,7 @@ a{
     z-index: 1400;
     background: rgba(0,0,0,.6);
     -webkit-animation: fade .2s ease;
-    animation: fade .2s ease;
+    animation: fade .5s ease;
 }
 .hidden{
     display: none!important;
@@ -104,4 +104,33 @@ a{
 .search_suggestion{
     max-height: calc(100vh - 92px);
     overflow-y: auto;
+    background-color: #ffffff;
+}
+.search_suggestion a:hover{
+    color: black;
+}
+.ad_list_cover{
+    display: block;
+    width: 85px;
+    height: 110px;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    background-position: 50%;
+    max-width: 100%;
+    position: relative;
+    border-radius: 3px;
+    background-size: cover;
+    cursor: pointer;
+}
+.ad_list_body{
+    flex-grow: 1;
+    padding-left: 12px;
+}
+
+.ad_list_info{
+    font-size: 13px;
+
+}
+.ad_list_rating{
+    color: #3bb33b;
 }

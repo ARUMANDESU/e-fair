@@ -211,6 +211,7 @@ class catalogController{
             for(let k=0;k<product.length;k++){
                 productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
             }
+            console.log(productAndUser)
             res.send({payload:productAndUser});
 
         }
