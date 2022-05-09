@@ -40,6 +40,7 @@ class profileController{
                 auth:res.user,
                 user:[],
                 edit:true,
+                product:[],
                 pcomments:[],
             })
         }
