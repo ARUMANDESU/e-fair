@@ -55,6 +55,8 @@ router
 router
     .get('/product/:id',auth(),catalogController.productPage)
 router
+    .post('/getAds',catalogController.search)
+router
     .get('/allProducts/:page',auth(),roleMiddleware(['ADMIN']),catalogController.allProducts)
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)

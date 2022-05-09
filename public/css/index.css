@@ -76,3 +76,32 @@ a{
         margin-left: 30px;
     }
 }
+
+.search{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1400;
+    background: rgba(0,0,0,.6);
+    -webkit-animation: fade .2s ease;
+    animation: fade .2s ease;
+}
+.hidden{
+    display: none!important;
+    visibility: hidden;
+}
+.search_container{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 80px;
+}
+.search_inner{
+    min-height: 100vh;
+    padding-top: 35px;
+}
+.search_suggestion{
+    max-height: calc(100vh - 92px);
+    overflow-y: auto;
+}

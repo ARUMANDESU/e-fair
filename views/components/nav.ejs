@@ -1,3 +1,15 @@
+<div class="search hidden" id="search">
+    <div class="container search_container">
+        <div class="search_inner">
+            <div class="search_input">
+                <input type="text" class="form-control" id="search_input" autocomplete="off" onkeyup="sendData(this)">
+            </div>
+            <div class="search_suggestion" id="search_suggestion">
+
+            </div>
+        </div>
+    </div>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0;">
     <div class=" container-fluid " style="background-color: #9CD821;">
         <div class="container justify-content-around d-flex flex-wrap">
@@ -6,33 +18,42 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form  class="d-flex" action="/search" >
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" style="margin-left: 250px;">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row flex-wrap">
-                    <li class="nav-item" style="margin-left: 300px;">
-                        <a href="/cart">
-                            <img src="/images/cart.png">
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a type="button" id="search-link" title="fast search">
+                            <img src="/images/search-svgrepo-com.svg" class="rounded-circle" width="70">
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a href="/cart" title="Cart">
+                            <img src="/images/cart.png" width="76">
                         </a>
 
                     </li>
                     <li class="nav-item">
                         <%if(auth!=null){%>
-                            <a href="/user/profile/<%-auth.username%>">
+                            <a href="/user/profile/<%-auth.username%>" title="Account">
                                 <img src="<%-auth.avatarUrl?auth.avatarUrl:"/images/login.png"%>" class="rounded-circle" width="72">
                             </a>
                         <%}else{%>
-                            <a href="/login">
+                            <a href="/login" title="Account">
                                 <img src="/images/login.png">
                             </a>
                         <%}%>
                     </li>
+
                 </ul>
+                </div>
 
             </div>
         </div>
         
     </div>
 </nav>
+

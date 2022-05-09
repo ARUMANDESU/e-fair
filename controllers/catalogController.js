@@ -203,7 +203,22 @@ class catalogController{
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
         }
     }
+    async search(req,res){
+        try{
+            let payload =req.body.payload.trim()
+            const productAndUser=[]
+            const product=await Product.find({name:{$regex: new RegExp('^'+payload+'.*','i')}}).sort({rating:-1}).exec();
+            for(let k=0;k<product.length;k++){
+                productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
+            }
+            res.send({payload:productAndUser});
 
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
+        }
+    }
 
 }
 
