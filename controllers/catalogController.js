@@ -160,12 +160,12 @@ class catalogController{
                 }
             })
             const deleteProduct =await Product.deleteOne({_id:productIdName})
-            res.render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/allProducts`})
+            res.render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/allProducts/1`})
 
         }
         catch (e){
             console.log(e);
-            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/allProducts"})
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1500,where:"/allProducts/1"})
         }
     }
     async home(req,res){
