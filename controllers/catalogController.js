@@ -83,7 +83,8 @@ class catalogController{
                 }
                 const images=[]
                 if(files.images.size!=0){
-                    if(typeof files.images=="object"){
+                    console.log(files.images)
+                    if(typeof files.images=="object"&&files.images.length==1){
                         const result = await cloudinary.uploader.upload(files.images.filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
                         images[0]={public_id:result.public_id,path: result.secure_url}
                     }

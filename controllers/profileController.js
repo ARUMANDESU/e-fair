@@ -116,7 +116,8 @@ class profileController{
     }
     async deleteUser(req,res){
         try{
-            const deleteUser = await User.deleteOne({username:req.params.user})
+            const deleteUser = await User.findOneAndDelete({username:req.params.user})
+            await Product.deleteMany({ownerID:deleteUser.id  })
             res.status(400).render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/users/1`})
 
         }
