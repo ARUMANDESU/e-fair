@@ -7,22 +7,16 @@
 
 </head>
 <body>
+    
 <%- include('components/nav') %>
 <div class=" sections">
     <div class="container inSections">
         <div class="row">
+            <%if(user._id==auth.id){%>
             <div class="col">
-                <div class="row">
-                    <div id="balance" class="col"> <h6> Balance: </h6> </div>
-                    <div id="bonuses" class="col"> <h6> Bonuses: </h6> </div>
-                    <div class="tooltip">info
-                        <span class="tooltiptext">info</span>
-                    </div>
-                </div>
+                <button class="buy" style="background-color: #9BD524" id="rzp-button1">Buy Subscription</button>
             </div>
-            <div class="col">
-                <button class="buy" style="background-color: #9BD524"> Buy subscription </button>
-            </div>
+            <%} %> 
         </div>
     </div>
 
@@ -433,6 +427,65 @@
 </div>
 
 <%- include('components/footer')%>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+    var orderId ;
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        var settings = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        };
+        fetch('/api/create/orderId',settings).then(data=> {
+            orderId=data.orderID;
+        })
+
+        
+    });
+
+    var options = {
+        "key": `rzp_test_eSwY7zRxlhB9Hk`, // Enter the Key ID generated from the Dashboard
+        "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Subscription",
+        "description": "Thank you for ...",
+        "image": `<%-user.avatarUrl%>`,
+        "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            alert(response.razorpay_payment_id);
+            alert(response.razorpay_order_id);
+            alert(response.razorpay_signature)
+        },
+        "prefill": {
+            "name": "<%-user.username%>",
+            "email": "<%-user.email%>",
+            "contact": "<%-user.phoneNumber%>"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#9CD821"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
 <script src="/js/personalArea.js"></script>
 <script>
     document.getElementById("logout").onclick =function () {

@@ -9,8 +9,18 @@ const roleMiddleware= require("../middlewaree/roleMiddleware")
 const auth =require("../middlewaree/auth")
 const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
-const Uuid =require("uuid")
 const upload = require("../utils/multer");
+const dotenv =require("dotenv")
+dotenv.config()
+const Razorpay =require('razorpay')
+
+const instance = new Razorpay({
+    key_id: process.env.razorpay_key_id,
+    key_secret: process.env.razorpay_key_secret,
+});
+
+
+
 
 router.use(cookieParser())
 
@@ -72,5 +82,20 @@ router
 router
     .get('/user/edit/ava',auth(),profileController.personalAreaEditAvaGet)
     .post('/user/edit/ava',auth(),upload.single("iavatar"),profileController.personalAreaEditAvaPost)
-router.get('/logout',authController.logOut)
+router
+    .get('/logout',authController.logOut)
+router
+    .post('/api/create/orderId',auth(),async (req,res)=>{
+        var options = {
+            amount: 50000,  // amount in the smallest currency unit
+            currency: "INR",
+            receipt: "order_rcptid_11"
+          };
+          instance.orders.create(options, function(err, order) {
+            console.log(order);
+            res.json({orderID:order.id})
+          });
+          
+    })
+
 module.exports= router;

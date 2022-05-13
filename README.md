@@ -18,6 +18,7 @@ A website where farm food sellers can list their products and users can choose b
 - [Express (Node.js framework)](https://expressjs.com/ru/)
 - [MongoDB (Database)](https://www.mongodb.com)
 - [EJS (Embedded JavaScript templates)](https://www.npmjs.com/package/ejs)
+- [Cloudinaty (Platform where you can upload img and videos after get access them)](https://cloudinary.com/)
 
 #
 

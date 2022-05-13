@@ -218,7 +218,6 @@ class catalogController{
             for(let k=0;k<product.length;k++){
                 productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
             }
-            console.log(productAndUser)
             res.send({payload:productAndUser});
 
         }
@@ -227,6 +226,7 @@ class catalogController{
             res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
         }
     }
+
 
 }
 
