@@ -1,1 +1,1 @@
-{"version":3,"sources":["app.less","D:/CodingLab/e-fair/client/src/utils/color.less"],"names":[],"mappings":"AACA;EACE,aAAA;EACA,sBAAA;EACA,qBAAA;EACA,kBCLkB,sDDKlB;;AAGF;EACE,WAAA","file":"app.css"}
+{"version":3,"sources":["app.less","D:/CodingLab/e-fair/client/src/utils/color.less"],"names":[],"mappings":"AACA;EACE,aAAA;EACA,sBAAA;EACA,qBAAA;;AAGF;EACE,kBCRkB,sDDQlB;;AAGF;EACE,WAAA","file":"app.css"}

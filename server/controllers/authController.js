@@ -22,28 +22,9 @@ const generateAccessToken = (id,role)=>{
 class authController{
     async register(req, res){
         try{
-            
-            let token = req.body.token;
-            
-            console.log(token);
-
-            async function verify() {
-                const ticket = await client.verifyIdToken({
-                    idToken: token,
-                    audience: CLIENT_ID,
-                })
-                const payload = ticket.getPayload();
-                const userid = payload['sub'];
-                console.log(payload);
-                return payload;
-            }
-
-
-
-
             const email =   req.body.email;
-            const username = req.body.token != null ? verify().username :  req.body.username;
-            const password = req.body.token != null ? verify().username :  req.body.password;
+            const username =   req.body.username;
+            const password =   req.body.password;
             
             const errors =validationResult(req);
             if(!errors){
@@ -59,7 +40,7 @@ class authController{
             const userRole = await Role.findOne({value:"USER"});
             const user = new User({email,username,password:hashPassword,roles:[userRole.value],avatarUrl:"https://res.cloudinary.com/nezz/image/upload/v1651755541/avatars/ecce-homo_j36lz7.jpg",phoneNumber:"",address:"",twitterUrl:"",instagramUrl:"",facebookUrl:""});
             await user.save();
-            return await  res.render("message",{auth:res.user,message:"The user has been successfully registered",timeout:1000,where:"/login"})
+            return await  res.json({message:"The user has been successfully registered"})
             
         }catch(e){
             console.log(e);
@@ -82,7 +63,7 @@ class authController{
             }
             const token =generateAccessToken(user._id,user.roles);
             res.cookie("auth",'Bearer '+ token)
-            res.render("message",{auth:res.user,message:"You successfully logged in",timeout:500,where:"/home"})
+            res.status(400).json(user)
 
         }catch(e){
             console.log(e);

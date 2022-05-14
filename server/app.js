@@ -5,8 +5,9 @@ const mongoose = require('mongoose')
 const authRouter =require("./routers/router")
 const auth = require("./middlewaree/auth")
 const dotenv =require("dotenv")
+const corsMiddleware = require("./middlewaree/corsMiddleware")
 dotenv.config()
-
+app.use(corsMiddleware)
 app.set('view engine', 'ejs')
 
 const port = process.env.PORT || 5000

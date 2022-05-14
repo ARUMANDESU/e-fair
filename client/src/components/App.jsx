@@ -5,14 +5,15 @@ import {BrowserRouter, Route,Redirect, Routes} from "react-router-dom";
 import Registration from "./registration/Registration";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from "react-bootstrap";
+import Login from "./login/Login";
 
 function App() {
   return (
       <BrowserRouter>
           <div className="app">
               <Navbar1/>
-              <Button> lol</Button>
               <Routes>
+                  <Route path="/login" element={<Login/>}/>
                   <Route path="/registration" element={<Registration/>}>
                   </Route>
               </Routes>
