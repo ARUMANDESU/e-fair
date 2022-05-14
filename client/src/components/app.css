@@ -1,0 +1,10 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background-color: linear-gradient(180deg, #9CD821 9%, #414141 51.26546%);
+}
+#root {
+  width: 100%;
+}
+/*# sourceMappingURL=app.css.map */

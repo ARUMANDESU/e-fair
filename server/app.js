@@ -9,7 +9,7 @@ dotenv.config()
 
 app.set('view engine', 'ejs')
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 app.use("/", authRouter)
 app.use(express.static('public'))
