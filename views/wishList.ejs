@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/head') %>
+</head>
+<body>
+<%- include('components/nav' )%>
+<div class="container-fluid sections" >
+    <div class="container py-5 h-100 inSections">
+        <%for(let k=0;k<products.length;k++){%>
+            <div class="col-12 item m-2" style="width: auto; height: auto;">
+                <a href="/product/<%-products[k].id%>" class="d-flex flex-row">
+                    <div><img class="img-fluid" src="<%-products[k].images[0].path%>"></div>
+                    <div class="text-center d-flex flex-column">
+                        <b><%-products[k].name%></b>
+                        <p><%-products[k].type.toString().toLowerCase()%></p>
+                    </div>
+                    <form>
+                        <button class="btn btn-danger" onclick="deleteFromMyWishList('<%-products[k].id%>')"></button>
+                    </form>
+                </a>
+            </div>
+        <%}%>
+    </div>
+</div>
+<%- include('components/footer')%>
+</body>
+</html>

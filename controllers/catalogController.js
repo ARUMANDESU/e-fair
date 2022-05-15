@@ -1,6 +1,7 @@
 const User = require("../modules/User")
 const Role = require("../modules/Role")
 const Type = require("../modules/Type")
+const WishList = require("../modules/WishList")
 const Product = require("../modules/Product")
 const Status = require("../modules/Status")
 const bcrypt =require("bcryptjs")
@@ -187,9 +188,21 @@ class catalogController{
     }
     async home(req,res){
         try {
+            const products=[]
             const product= await Product.find({status:"ACTIVE"}).sort({rating:-1}).limit(8)
 
-            res.render("index",{auth:res.user,product:product})
+                for(let k=0;k<product.length;k++){
+                    let isInWishList=false;
+                    const wishList= await WishList.findOne({userID:res.user.id}).exec()
+                    if(wishList){
+                        wishList.list.forEach(listProduct=>{if(listProduct.productID==product[k].id){isInWishList=true}})
+                    }
+                products[k]={
+                    product: product[k],
+                    inWishList: isInWishList
+                }
+            }
+            res.render("index",{auth:res.user,product:products})
         }
         catch (e) {
             console.log(e);

@@ -58,10 +58,24 @@ function sendData(e){
 }
 
 function newAdd(comment,from,to){
-    console.log("something")
+
     fetch(`/addComment/${from}/to/${to}`,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({payload:comment.value})
+    })
+}
+function addToMyWishList(productID){
+    fetch(`/addToMyWishList/${productID}`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+
+    })
+}
+
+function deleteFromMyWishList(productID){
+    fetch(`/deleteFromMyWishList/${productID}`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
     })
 }

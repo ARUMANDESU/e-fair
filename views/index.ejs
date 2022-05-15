@@ -38,15 +38,31 @@
                     <div class="d-flex flex-row flex-wrap justify-content-center">
                         <%product.forEach(data=>{%>
 
-                        <div class="col-3 item m-2">
-                            <a  href="/product/<%-data.id%>">
-                                <img class="img-fluid" src="<%-data.images[0].path%>">
-                                <div class="text-center d-flex flex-column">
-                                    <b><%-data.name%></b>
-                                    <p><%-data.type.toString().toLowerCase()%></p>
-                                </div>
-                            </a>
-                        </div>
+                            <div class="col-3 item m-3">
+                                <a  href="/product/<%-data.product.id%>">
+                                    <img class="img-fluid" src="<%-data.product.images[0].path%>">
+
+                                </a>
+                                    <div class="text-center d-flex flex-column">
+                                        <div>
+                                            <a  href="/product/<%-data.product.id%>">
+                                                <b><%-data.product.name%></b>
+                                            </a>
+                                            <form>
+                                                <%if(data.inWishList){%>
+                                                    <button class="btn btn-danger" style="border-radius: 100%; width: 25px; height: 25px;" disabled>  </button>
+                                                <%} else{%>
+                                                <button class="btn btn-success" style="border-radius: 100%; width: 25px; height: 25px;" onclick="addToMyWishList('<%-data.product.id%>')">  </button>
+                                                <%}%>
+                                            </form>
+
+                                        </div>
+
+                                        <p><%-data.product.type.toString().toLowerCase()%></p>
+                                    </div>
+
+
+                            </div>
 
 
                         <%})%>

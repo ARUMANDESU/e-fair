@@ -5,6 +5,7 @@ const authController =require("../controllers/authController")
 const profileController= require("../controllers/profileController")
 const catalogController = require("../controllers/catalogController")
 const commentController=require("../controllers/commentController")
+const wishListController = require("../controllers/wishListController")
 
 const {check, checkSchema} = require("express-validator")
 
@@ -103,6 +104,9 @@ router
 
 router
     .post('/addComment/:fid/to/:tid',auth(),commentController.addNewComment)
-
+router
+    .get('/MyWishList',auth(),wishListController.getWishList)
+    .post('/addToMyWishList/:product',auth(),wishListController.addToWishList)
+    .post('/deleteFromMyWishList/:product',auth(),wishListController.deleteFromMyWishList)
 
 module.exports= router;
