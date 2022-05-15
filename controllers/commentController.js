@@ -13,14 +13,9 @@ class commentController {
             const hour =date.getUTCHours()
             const min = date.getUTCMinutes()
 
-            const comment= await Comment.findOne({fromID:from,toID:to})
-            if(comment){
-                await Comment.findOneAndUpdate({fromID:from,toID:to},{$push:{comments:{commentText:text,date:{year:year,month:month,day:day,hour:hour,min:min}}}})
-            }
-            else{
-                await new Comment({fromID:from,toID:to,comments:[{commentText:text,date:{year:year,month:month,day:day,hour:hour,min:min}}]}).save()
 
-            }
+            await new Comment({fromID:from,toID:to,commentText:text,date:{year:year,month:month,day:day,hour:hour,min:min}}).save()
+
             res.status(200)
         }
         catch (e) {

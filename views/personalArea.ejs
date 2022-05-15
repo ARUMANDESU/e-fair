@@ -173,7 +173,7 @@
 
                             <div class="row gutters-sm">
                                 <div class="col-sm-12 mb-3">
-                                    <div class="card h-100 w-75">
+                                    <div class="card h-100 w-100">
                                         <%if(user.id!=auth._id){%>
                                             <form >
                                                 <div class="card-body container d-flex flex-row">
@@ -184,8 +184,16 @@
                                         <%}%>
 
 
-                                        <div class="card-body">
+                                        <div class="card-body" style="font-size: 20px;">
                                             <h3>Comments <%-pcomments.length%></h3>
+                                            <div style="overflow-y: auto; height: 500px;">
+                                                <%for(k=0;k<pcomments.length;k++){%>
+                                                    <div class="card-body">
+                                                        <div ><img src="<%-pcomments[k].user.avatarUrl%>" class="rounded-circle" width="35px"> <%-pcomments[k].user.username%></div>
+                                                        <div> <%-pcomments[k].comments.commentText%></div>
+                                                    </div>
+                                                <%}%>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

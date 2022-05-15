@@ -1,9 +1,11 @@
 const User = require("../modules/User")
 const Role = require("../modules/Role")
 const Product = require("../modules/Product")
+const Comment = require("../modules/Comment")
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const cloudinary = require("cloudinary").v2;
+
 
 
 
@@ -16,13 +18,23 @@ class profileController{
             const userIdName=req.params.id
 
             User.findOne({username:userIdName}).exec().then( async doc=>{
+                const comment=[]
                 const product= await Product.find({ownerID:doc.id})
+                const comments = await Comment.find({toID:doc.id})
+                for(let k=0;k<comments.length;k++){
+                    comment[k]={
+                        user:await User.findById(comments[k].fromID),
+                        comments: comments[k],
+                    }
+                }
+
+                console.log(comment)
                 res.render("personalArea",{
                     auth:res.user,
                     user:doc,
                     edit:false,
                     product:product,
-                    pcomments:[],
+                    pcomments:comment,
                 })
             })
 
