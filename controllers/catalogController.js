@@ -8,6 +8,7 @@ const jwt =require("jsonwebtoken")
 const {query} = require("express-validator");
 const cloudinary = require("cloudinary").v2;
 const formidable = require("formidable")
+const Comment = require("../modules/Comment");
 
 
 class catalogController{
@@ -116,10 +117,19 @@ class catalogController{
     async productPage(req,res){
         try{
             const productIdName=req.params.id
-            Product.findById(productIdName).exec().then(doc=>{
+            await Product.findById(productIdName).exec().then(async doc=>{
+                const comment=[]
+                const comments = await Comment.find({toID:doc.id})
+                for(let k=0;k<comments.length;k++){
+                    comment[k]={
+                        user:await User.findById(comments[k].fromID),
+                        comments: comments[k],
+                    }
+                }
                 res.render("productPage",{
                     auth:res.user,
                     product:doc,
+                    pcomments:comment
                 })
             })
         }

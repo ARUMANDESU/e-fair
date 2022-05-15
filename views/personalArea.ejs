@@ -174,7 +174,7 @@
                             <div class="row gutters-sm">
                                 <div class="col-sm-12 mb-3">
                                     <div class="card h-100 w-100">
-                                        <%if(user.id!=auth._id){%>
+                                        <%if(user.id!=auth._id &&auth){%>
                                             <form >
                                                 <div class="card-body container d-flex flex-row">
                                                     <textarea class="form-control" id="comment" name="comment" minlength="5"></textarea>
