@@ -1,9 +1,13 @@
 const express = require('express')
 const router = express()
+
 const authController =require("../controllers/authController")
 const profileController= require("../controllers/profileController")
 const catalogController = require("../controllers/catalogController")
+const commentController=require("../controllers/commentController")
+
 const {check, checkSchema} = require("express-validator")
+
 const authMiddleware = require("../middlewaree/authMiddleware")
 const roleMiddleware= require("../middlewaree/roleMiddleware")
 const auth =require("../middlewaree/auth")
@@ -86,16 +90,19 @@ router
     .get('/logout',authController.logOut)
 router
     .post('/api/create/orderId',auth(),async (req,res)=>{
-        var options = {
+        const options = {
             amount: 50000,  // amount in the smallest currency unit
             currency: "INR",
             receipt: "order_rcptid_11"
           };
           instance.orders.create(options, function(err, order) {
-            console.log(order);
             res.json({orderID:order.id})
           });
           
     })
+
+router
+    .post('/addComment/:fid/to/:tid',auth(),commentController.addNewComment)
+
 
 module.exports= router;

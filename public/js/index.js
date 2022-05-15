@@ -55,6 +55,13 @@ function sendData(e){
         return;
     }
     search_suggestion.innerHTML=''
+}
 
-
+function newAdd(comment,from,to){
+    console.log("something")
+    fetch(`/addComment/${from}/to/${to}`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({payload:comment.value})
+    })
 }
