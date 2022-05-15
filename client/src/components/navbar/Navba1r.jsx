@@ -4,28 +4,25 @@ import Logo from '../../assets/img/logo.svg'
 import SearchIcon from '../../assets/img/search-svgrepo-com.svg'
 import CartIcon from  '../../assets/img/cart.png'
 import LoginIcon from '../../assets/img/login.png'
-import {Button, Container, Image, Navbar, NavbarBrand} from "react-bootstrap";
+import { Container, Image, Navbar, NavbarBrand} from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/NavbarCollapse";
+import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Navbar1 = () => {
+    const isAuth= useSelector(state => state.user.isAuth)
+    const user = useSelector(state => state.user.currentUser)
     return (
         <div>
-{/*            <div className="navbar">
-                <div className="container">
-                    <a href="/registration">reg</a>
-                    <img src={Logo} alt="" className="navbar__logo"/>
-                    <div className="navbar__header">E-Fair</div>
-                    <NavLink to="/login"> <Button variant="secondary" size="sm" > Log in </Button></NavLink>
-                    <NavLink to="/registration"> <Button variant="secondary" size="sm" > Sign up </Button></NavLink>
-                </div>
-
-            </div>*/}
-            <Navbar bg="light" expand="lg" className="my-3">
-                <Container fluid="lg">
-                    <Container>
-                        <NavbarBrand href="/">
-                            <Image  src={Logo}/>
-                        </NavbarBrand>
+            <Navbar style={{padding:0}}  bg="light" expand="lg" >
+                <Container className="py-3" style={{backgroundColor:"#9CD821"}} fluid={true}>
+                    <Container className="justify-content-around d-flex flex-wrap">
+                        <NavLink to="/">
+                            <NavbarBrand className="justify-content-around d-flex flex-wrap">
+                                <Image  src={Logo}/>
+                                <p className="text-center pt-3 logo">E-FAIR</p>
+                            </NavbarBrand>
+                        </NavLink>
                         <Navbar.Toggle aria-controls="navbarScroll" />
                         <NavbarCollapse>
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -47,16 +44,25 @@ const Navbar1 = () => {
                                             </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a href="/cart" title="Cart">
+                                            <NavLink to="/cart">
                                                 <img src={CartIcon} width="76"/>
-                                            </a>
+                                            </NavLink>
+                                        </li>
+                                        {!isAuth &&
+                                            <li className="nav-item">
+                                                <NavLink to="/registration">
+                                                    <img src={LoginIcon}/>
+                                                </NavLink>
+                                            </li>
+                                        }
+                                        {isAuth &&
+                                            <li className="nav-item">
+                                                <NavLink to={'/user/profile/'+user.username}>
+                                                    <img src={user.avatarUrl} className="rounded-circle" width="72px"/>
+                                                </NavLink>
+                                            </li>
+                                        }
 
-                                        </li>
-                                        <li className="nav-item">
-                                            <a href="/registration" title="Account">
-                                            <img src={LoginIcon}/>
-                                            </a>
-                                        </li>
                                     </ul>
                             </div>
                             </div>

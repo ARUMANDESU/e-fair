@@ -36,14 +36,14 @@ router
     .post('/login', authController.login)
 
 router
-    .get('/register',auth(), (req, res) => {
+    .get('/register',auth, (req, res) => {
     res.render("register",{auth:res.user})
     })
     .post('/register', [
         check('username',"Username cannot be empty").notEmpty(),
         check('password',"Password must be more than 7 and less than 15 symbols").isLength({min:7,max:15})
     ],authController.register)
-
+router.get('/auth',auth(),authController.auth)
 router
     .get("/users/:page" ,auth(),roleMiddleware(['ADMIN']) ,authController.getUsers);
 

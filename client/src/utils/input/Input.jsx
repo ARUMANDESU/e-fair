@@ -9,6 +9,7 @@ const Input = (props) => {
                    className={props.className}
                    type={props.type}
                    placeholder={props.placeholder}
+                   name={props.name}
             />
         </div>
     );

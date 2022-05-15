@@ -52,22 +52,31 @@ class authController{
         try{
             const username= req.body.username;
             const password= req.body.password;
-            
+
             const user =await User.findOne({username});
             if(!user){
-                return res.status(400).render("message",{auth:res.user,message:`User ${username} not found`,timeout:1500,where:"/login"})
+                return res.status(400).json({message:`User ${username} not found`})
             }
             const validPassword = bcrypt.compareSync(password,user.password)
             if(!validPassword){
-                return res.status(400).render("message",{auth:res.user,message:"Wrong password",timeout:1000,where:"/login"})
+                return res.status(400).json({message:"Wrong Password"})
             }
             const token =generateAccessToken(user._id,user.roles);
-            res.cookie("auth",'Bearer '+ token)
-            res.status(400).json(user)
+            res.status(200).json({token, user:user})
 
         }catch(e){
             console.log(e);
-            res.status(400).render("message",{auth:res.user,message:"Login error",timeout:700,where:"/login"})
+            res.status(400).json({message:'Something get wrong'})
+        }
+    }
+    async auth(req, res){
+        try{
+            const user = await User.findOne({_id:req.user.id})
+            const token =generateAccessToken(user._id,user.roles);
+            res.status(200).json({token, user:user})
+        }catch(e){
+            console.log(e);
+            res.status(400).json({message:'Something get wrong'})
         }
     }
     

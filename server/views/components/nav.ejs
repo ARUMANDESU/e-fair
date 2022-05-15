@@ -39,7 +39,7 @@
                         <li class="nav-item">
                             <%if(auth!=null){%>
                                 <a href="/user/profile/<%-auth.username%>" title="Account">
-                                    <img src="<%-auth.avatarUrl?auth.avatarUrl:"/images/login.png"%>" class="rounded-circle" width="72">
+                                    <img src="<%-auth.avatarUrl?auth.avatarUrl:"/images/login.png"%>" class="rounded-circle" rounded-circle>
                                 </a>
                             <%}else{%>
                                 <a href="/login" title="Account">
