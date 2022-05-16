@@ -101,7 +101,11 @@ a{
 }
 .search_inner{
     min-height: 100vh;
-    padding-top: 35px;
+    padding-top: 21px;
+}
+.search__input{
+    min-width: 50px;
+    max-width: 800px;
 }
 .search_suggestion{
     max-height: calc(100vh - 92px);

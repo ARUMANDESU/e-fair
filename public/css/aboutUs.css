@@ -6,10 +6,6 @@ body{
 
     position: sticky;
 }
-.logo p{
-    font-size: 48px;;
-}
-
 .centered {
     background-image: url("https://mir-s3-cdn-cf.behance.net/8de60359fc76f43fe7a318c79436eb45/16374a83-19a3-45d4-8f64-6ca1f3d340bc_rwc_0x982x3840x540x3840.jpg?h=e0916e5ecdadc8cd1ebe826393b77deb");
     color: #9CD821;

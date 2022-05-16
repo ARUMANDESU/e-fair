@@ -1,19 +1,24 @@
 const search=document.getElementById("search")
+const searchLink=document.getElementById("search-link")
 const search_suggestion= document.getElementById("search_suggestion")
-document.getElementById("search-link").onclick=function () {
+searchLink.onclick=function () {
+    searchLink.classList.toggle("hidden")
     search.classList.toggle("hidden")
-    document.getElementById("search-link").focus()
+
     document.getElementsByTagName("body")[0].style.overflow='hidden'
+
+    setInterval(()=>{search.focus()},1000)
 }
 
 search.addEventListener("click", function(event) {
     if (event.target.closest(".search_inner")) return
-
+    searchLink.classList.toggle("hidden")
     search.classList.toggle("hidden")
     document.getElementsByTagName("body")[0].style.overflow='auto'
 })
 
 function sendData(e){
+    searchLink.value=e.value
     let match= e.value.match(/^[a-zA-Z ]*/);
     let match2 =e.value.match(/\s*/);
     if(match2[0]===e.value){
@@ -35,7 +40,7 @@ function sendData(e){
             payload.forEach((data,index)=>{
                 if(index>0) search_suggestion.innerHTML+='<hr>'
                 search_suggestion.innerHTML+=`
-                    <a class="pb-3" href="/product/${data.product._id}">
+                    <a class="py-3" href="/product/${data.product._id}">
                     <div class="container d-flex flex-row flex-wrap justtify-content-center">
                         <div class="ad_list_cover" style="background-image: url('${data.product.images[0].path}')"></div>
                         <div class="ad_list_body">
