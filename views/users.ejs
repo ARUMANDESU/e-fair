@@ -19,7 +19,7 @@
             </tr>
             <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
             <tr style="font-size: 18px;">
-                <td><%-k%></td>
+                <td><p><%-k+1%></p></td>
                 <td> <a class="text pl-5"  href="/user/profile/<%-users[k].username%>"><img class="rounded-circle" width="45" src="<%-users[k].avatarUrl%>"><%-users[k].username%></a></td>
                 <td><%-users[k].email%></td>
                 <td><%-users[k].roles%></td>
