@@ -9,6 +9,7 @@
     <div class="sections">
         <table class="table table-hover ">
             <tr>
+                <th>#</th>
                 <th>Product name</th>
                 <th>Owner username</th>
                 <th>Type</th>
@@ -17,7 +18,8 @@
                 <th>Edit</th>
             </tr>
             <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
-            <tr>
+            <tr style="font-size: 18px;">
+                <td><%-k%></td>
                 <td> <a class="text pl-5" href="/product/<%-products[k].product.id%>"><h3><%-products[k].product.name%></h3></a></td>
                 <td> <a class="text pl-5" href="/user/profile/<%-products[k].user.username%>"><img class="rounded-circle" width="45" src="<%-products[k].user.avatarUrl%>"><%-products[k].user.username%></a></td>
                 <td><%-products[k].product.type%></td>
