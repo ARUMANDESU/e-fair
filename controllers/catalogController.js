@@ -189,7 +189,7 @@ class catalogController{
     async home(req,res){
         try {
             const products=[]
-            const product= await Product.find({status:"ACTIVE"}).sort({rating:-1}).limit(8)
+            const product= await Product.find({status:"ACTIVE"}).sort({rating:-1}).limit(10)
 
                 for(let k=0;k<product.length;k++){
                     let isInWishList=false;

@@ -11,7 +11,7 @@ a{
     text-decoration: none;
 }
 .logo p{
-    font-size: 48px;;
+    font-size: 28px;;
 }
 .mainsection{
     background: linear-gradient(180deg, #9CD821 0%, #414141 66.67%); 
@@ -28,36 +28,34 @@ a{
 }
 
 .item{
-    background-color: #F6F6F6;
+    background-color: #9CD821D8;
     border-radius: 25px;
-    width: 300px;
-    height: 350px;
+    width: 200px;
+    height: 250px;
     filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
-    font-size: 28px;
-    padding: 30px 5px 30px 5px;
+    font-size: 20px;
+    padding: 0px 1px 0px 1px;
     margin-right: 0px;
     margin-bottom: 20px;
 }
 .item img{
     position: relative;
-    width: 220px;
-    height: 220px;
-    left: 35px;
+    width: 200px;
+    height: 150px;
     border-radius: 25px;
 }
 
 .types {
-    width: 300px;
-    height: 228px;
-    background-color: #F6F6F6;
+    width: 228px;
+    height: 200px;
+    background-color: #9CD821D8;
     filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
     text-align: center;
     border-radius: 25px;
     margin: 0px;
 }
 .types:hover{
-
-    color:#9CD821;
+    color:white;
 }
 
 .link a{
@@ -74,9 +72,6 @@ a{
     border-radius: 40px;
     width: 446px;
     color: white;
-    margin-bottom: 150px;
-    margin-left: 400px;
-    margin-top: 30px
 }
 @media screen and (max-width: 1024px) {
     .viewMore {

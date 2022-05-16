@@ -5,7 +5,6 @@
                 <input type="text" class="form-control" id="search_input" autocomplete="off" onkeyup="sendData(this)">
             </div>
             <div class="search_suggestion pt-3" id="search_suggestion">
-
             </div>
         </div>
     </div>
@@ -13,33 +12,43 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0;">
     <div class=" container-fluid " style="background-color: #9CD821;">
         <div class="container justify-content-around d-flex flex-wrap">
-            <a class="navbar-brand d-flex flex-row logo" href="/home" ><img src="/images/logo.svg"> <p class="text-center pt-3 logo">E-FAIR</p>  </a>
+            <a class="navbar-brand d-flex flex-row logo" href="/home" ><img src="/images/logo.svg" width="40"> <p class="text-center pt-3 logo">E-FAIR</p>  </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/catalog/1" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 25px;">
+                            Catalog
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/catalog/1">ALL</a></li>
+                            <li><a class="dropdown-item" href="/catalog/fruit/page/1">Fruits</a></li>
+                            <li><a class="dropdown-item" href="/catalog/vegetables/page/1">Vegetables</a></li>
+                            <li><a class="dropdown-item" href="/catalog/meat/page/1">Meat products</a></li>
+                            <li><a class="dropdown-item" href="/catalog/milk/page/1">Milk products</a></li>
+                            <li><a class="dropdown-item" href="/catalog/other/page/1">Other</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="align-items-center d-flex flex-row justify-content-end">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row justify-content-end">
-                    <li class="nav-item">
+                    <li class="nav-item mx-2">
                         <a type="button" id="search-link" title="fast search">
-                            <img src="/images/search-svgrepo-com.svg" class="rounded-circle" width="70">
+                            <img src="/images/search-svgrepo-com.svg" class="rounded-circle" width="35">
                         </a>
                     </li>
-                    <li class="nav-item" >
+                    <li class="nav-item mx-2" >
                         <a href="/MyWishList" title="Cart">
-                            <img src="/images/cart.png" width="76">
+                            <img src="/images/cart.png" width="40">
                         </a>
 
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mx-2">
                         <%if(auth!=null){%>
                             <a href="/user/profile/<%-auth.username%>" title="Account">
-                                <img src="<%-auth.avatarUrl?auth.avatarUrl:"/images/login.png"%>" class="rounded-circle" width="72">
+                                <img src="<%-auth.avatarUrl?auth.avatarUrl:"/images/login.png"%>" class="rounded-circle" width="40">
                             </a>
                         <%}else{%>
                             <a href="/login" title="Account">
