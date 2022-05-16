@@ -22,6 +22,7 @@ a{
     padding-bottom: 100px;
     background-color: #f2f2f2;
     border-radius:67px;
+    min-height: 1000px;
 }
 .inSections{
     border-radius: 25px;  filter: drop-shadow(20px 15px 20px rgba(164, 164, 164, 0.25));
