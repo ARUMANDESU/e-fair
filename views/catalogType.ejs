@@ -6,26 +6,29 @@
 <body>
 <%- include('components/nav' )%>
 <div class=" container-fluid mainsection" >
-    <section class="container-fluid py-5" style="border-radius: 67px;background-color: #F2F2F2;">
-        <h1 class="text-center"><%-type.toString().slice(0,1).toUpperCase()%><%-type.toString().slice(1,)%></h1>
-        <div class="container" id="top" style="margin-top: 150px;">
+    <section class="container-fluid py-5 " style="border-radius: 67px;background-color: #F2F2F2;">
+        <div class="sections">
+            <h1 class="text-center"><%-type.toString().slice(0,1).toUpperCase()%><%-type.toString().slice(1,)%></h1>
+            <div class="container" id="top" style="margin-top: 150px;">
 
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
-                        <div class="col-3 item m-2">
-                            <a  href="/product/<%-product[k].id%>">
-                                <img class="img-fluid" src="<%-product[k].images[0].path%>">
-                                <div class="text-center d-flex flex-column">
-                                    <b><%-product[k].name%></b>
-                                    <p><%-product[k].type.toString().toLowerCase()%></p>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="col-3 item m-2">
+                        <a  href="/product/<%-product[k].id%>">
+                            <img class="img-fluid" src="<%-product[k].images[0].path%>">
+                            <div class="text-center d-flex flex-column">
+                                <b><%-product[k].name%></b>
+                                <p><%-product[k].type.toString().toLowerCase()%></p>
+                            </div>
+                        </a>
+                    </div>
                     <%}%>
 
                 </div>
 
+            </div>
         </div>
+
         <div class="d-flex flex-row justify-content-center">
             <%if(page!=1){%>
                 <a href="/catalog/<%-type%>/page/<%-page-1%>"><button class="btn btn-sm btn-secondary"><%-page-1%></button></a>
