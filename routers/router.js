@@ -6,6 +6,7 @@ const profileController= require("../controllers/profileController")
 const catalogController = require("../controllers/catalogController")
 const commentController=require("../controllers/commentController")
 const wishListController = require("../controllers/wishListController")
+const chatController = require('../controllers/chatController')
 
 const {check, checkSchema} = require("express-validator")
 
@@ -16,6 +17,7 @@ const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
 const upload = require("../utils/multer");
 const dotenv =require("dotenv")
+
 dotenv.config()
 const Razorpay =require('razorpay')
 
@@ -109,4 +111,9 @@ router
     .post('/addToMyWishList/:product',auth(),wishListController.addToWishList)
     .post('/deleteFromMyWishList/:product',auth(),wishListController.deleteFromMyWishList)
 
+
+
+//chat
+router
+    .get('/chat/:username',auth(),chatController.chat)
 module.exports= router;
