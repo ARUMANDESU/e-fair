@@ -71,7 +71,9 @@
                                                 <p class="text-muted font-size-sm"><%-user.address%></p>
                                             <%}%>
                                             <%if(user.id==auth._id){%>
-                                            <button class="btn btn-outline-danger" id="logout">Log out</button>
+                                                <button class="btn btn-outline-danger" id="logout">Log out</button>
+                                            <%} else{%>
+                                                <button class="btn btn-outline-primary" id="message">Message</button>
                                             <%}%>
                                         </div>
                                     </div>
@@ -444,9 +446,10 @@
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+    <%if(user.id==auth._id){%>
 
     var orderId ;
-    document.addEventListener("DOMContentLoaded", function(event) { 
+    document.addEventListener("DOMContentLoaded", function(event) {
         var settings = {
             method: "POST",
             headers: {
@@ -457,7 +460,7 @@
             orderId=data.orderID;
         })
 
-        
+
     });
 
     var options = {
@@ -487,25 +490,64 @@
     };
     var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response){
-            alert(response.error.code);
-            alert(response.error.description);
-            alert(response.error.source);
-            alert(response.error.step);
-            alert(response.error.reason);
-            alert(response.error.metadata.order_id);
-            alert(response.error.metadata.payment_id);
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
     });
     document.getElementById('rzp-button1').onclick = function(e){
         rzp1.open();
         e.preventDefault();
     }
+    <%}%>
 </script>
 <script src="/js/personalArea.js"></script>
 <script>
+
+    <%if(user.id==auth._id){%>
     document.getElementById("logout").onclick =function () {
         window.location.href="/logout"
-
     }
+    <%} else {%>
+
+    document.getElementById("message").onclick=function () {
+        (function(t,a,l,k,j,s){
+            s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+            ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+                        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+        Talk.ready.then(function () {
+            var me = new Talk.User({
+                id: '<%-auth._id%>',
+                name: '<%-auth.username%>',
+                email: '<%-auth.email%>',
+                photoUrl: '<%-auth.avatarUrl%>',
+                welcomeMessage: 'Hey there! How are you? :-)',
+            });
+            window.talkSession = new Talk.Session({
+                appId: 'tyAo8PId',
+                me: me,
+            });
+            var other = new Talk.User({
+                id: '<%-user._id%>',
+                name: '<%-user.username%>',
+                email: '<%-user.email%>',
+                photoUrl: '<%-user.avatarUrl%>',
+
+            });
+
+            var conversation = talkSession.getOrCreateConversation(
+                Talk.oneOnOneId(me, other)
+            );
+            conversation.setParticipant(me);
+            conversation.setParticipant(other);
+
+            document.location.pathname=('/chat/<%-user.username%>')
+        });
+    }
+    <%}%>
 </script>
 
 </body>

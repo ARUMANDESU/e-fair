@@ -10,62 +10,52 @@
 
 <div class=" container-fluid mainsection " >
     <section class="container-fluid py-5" style="border-radius: 67px;background-color: #F2F2F2;">
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-lg-12">
-            <div class="card chat-app">
-                <div class="chat">
-                    <div class="chat-header clearfix">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                </a>
-                                <div class="chat-about">
-                                    <h6 class="m-b-0">Aiden Chavez</h6>
-                                    <small>Last seen: 2 hours ago</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-history">
-                        <ul class="m-b-0">
-                            <li class="clearfix">
-                                <div class="message-data text-right">
-                                    <span class="message-data-time">10:10 AM, Today</span>
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                </div>
-                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:12 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Are we meeting today?</div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:15 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-send"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Enter text here...">
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+        <!-- container element in which TalkJS will display a chat UI -->
+        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+            <i>Loading chat...</i>
         </div>
-    </div>
-</div>
     </section>
 </div>
+<script>
+
+    (function(t,a,l,k,j,s){
+        s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+        ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+                    .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+    Talk.ready.then(function () {
+
+        var me = new Talk.User({
+            id: '<%-auth._id%>',
+            name: '<%-auth.username%>',
+            email: '<%-auth.email%>',
+            photoUrl: '<%-auth.avatarUrl%>',
+            role:'<%-auth.roles[auth.roles.length-1]%>'
+        });
+        window.talkSession = new Talk.Session({
+            appId: 'tyAo8PId',
+            me: me,
+        });
+        var other = new Talk.User({
+            id: '<%-user._id%>',
+            name: '<%-user.username%>',
+            email: '<%-user.email%>',
+            photoUrl: '<%-user.avatarUrl%>',
+            role:'<%-user.roles[user.roles.length-1]%>'
+
+        });
+
+        var conversation = talkSession.getOrCreateConversation(
+            Talk.oneOnOneId(me, other)
+        );
+        conversation.setParticipant(me);
+        conversation.setParticipant(other);
+
+        var inbox = talkSession.createInbox({ selected: conversation });
+        inbox.mount(document.getElementById('talkjs-container'));
+    });
+</script>
+<script src="/js/chat.js"></script>
 <%- include('components/footer')%>
 </body>
 </html>

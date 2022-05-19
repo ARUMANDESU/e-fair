@@ -84,3 +84,4 @@ function deleteFromMyWishList(productID){
         headers:{'Content-Type':'application/json'},
     })
 }
+

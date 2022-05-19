@@ -115,5 +115,6 @@ router
 
 //chat
 router
-    .get('/chat/:username',auth(),chatController.chat)
+    .get('/chat',auth(),chatController.chat)
+    .get('/chat/:username',auth(),chatController.chatusername)
 module.exports= router;

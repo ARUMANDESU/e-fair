@@ -43,17 +43,24 @@
                 </ul>
                 <div class="align-items-center d-flex flex-row justify-content-end">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row justify-content-end">
-                        <li class="nav-item mx-2" >
-                            <a href="/newAd" title="new ad">
-                                <img src="/images/icons8-add-50.png"  width="40">
-                            </a>
+                        <%if(auth!=null){%>
+                            <li class="nav-item mx-2" >
+                                <a href="/newAd" title="new ad">
+                                    <img src="/images/icons8-add-50.png"  width="40">
+                                </a>
 
-                        </li>
-                        <li class="nav-item mx-2" >
-                            <a href="/MyWishList" title="Cart">
-                                <img src="/images/icons8-wish-list-50.png"  width="37">
-                            </a>
-                        </li>
+                            </li>
+                            <li class="nav-item mx-2" >
+                                <a href="/MyWishList" title="Cart">
+                                    <img src="/images/icons8-wish-list-50.png"  width="37">
+                                </a>
+                            </li>
+                            <li class="nav-item mx-2" >
+                                <a href="/chat" title="Chat">
+                                    <img src="/images/message-regular.svg"  width="37">
+                                </a>
+                            </li>
+                        <%}%>
                         <li class="nav-item mx-2">
                             <%if(auth!=null){%>
                                 <a href="/user/profile/<%-auth.username%>" title="Account">
