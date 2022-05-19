@@ -190,13 +190,15 @@ class catalogController{
         try {
             const products=[]
             const product= await Product.find({status:"ACTIVE"}).sort({rating:-1}).limit(10)
+            let isInWishList=false;
 
-                for(let k=0;k<product.length;k++){
-                    let isInWishList=false;
+            for(let k=0;k<product.length;k++){
+                if(res.user){
                     const wishList= await WishList.findOne({userID:res.user.id}).exec()
                     if(wishList){
                         wishList.list.forEach(listProduct=>{if(listProduct.productID==product[k].id){isInWishList=true}})
                     }
+                }
                 products[k]={
                     product: product[k],
                     inWishList: isInWishList

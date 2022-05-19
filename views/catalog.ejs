@@ -24,14 +24,16 @@
                                 <a  href="/product/<%-product[k].id%>">
                                     <b><%-product[k].name%></b>
                                 </a>
+                                <%if(auth){%>
                                 <form>
+
                                     <%if(product[k].inWishList){%>
                                         <button class="btn btn-danger" style="border-radius: 100%; width: 25px; height: 25px;" disabled>  </button>
                                     <%} else{%>
                                     <button class="btn btn-success" style="border-radius: 100%; width: 25px; height: 25px;" onclick="addToMyWishList('<%-product[k].id%>')">  </button>
                                     <%}%>
                                 </form>
-
+                                <%}%>
                             </div>
 
                             <p><%-product[k].type.toString().toLowerCase()%></p>

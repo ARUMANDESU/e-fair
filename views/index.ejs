@@ -52,6 +52,7 @@
                                             <a href="/product/<%-data.product.id%>">
                                                 <b><%-data.product.name%></b>
                                             </a>
+                                            <%if(auth){%>
                                             <form>
                                                 <%if(data.inWishList){%>
                                                     <button class="btn btn-danger" style="border-radius: 100%; width: 25px; height: 25px;" disabled>  </button>
@@ -59,7 +60,7 @@
                                                 <button class="btn btn-success" style="border-radius: 100%; width: 25px; height: 25px;" onclick="addToMyWishList('<%-data.product.id%>')">  </button>
                                                 <%}%>
                                             </form>
-
+                                            <%}%>
                                         </div>
 
                                         <p><%-data.product.type.toString().toLowerCase()%></p>
