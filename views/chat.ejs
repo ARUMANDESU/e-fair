@@ -25,8 +25,9 @@
                     .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
     Talk.ready.then(function () {
 
+        const meID='<%-auth.id%>'
         var me = new Talk.User({
-            id: '<%-auth._id%>',
+            id: meID,
             name: '<%-auth.username%>',
             email: '<%-auth.email%>',
             photoUrl: '<%-auth.avatarUrl%>',
