@@ -137,6 +137,13 @@ class catalogController{
             await Product.findById(productIdName).exec().then(async doc=>{
                 const comment=[]
                 const comments = await Comment.find({toID:doc.id})
+                let isInWishList=false
+                if(res.user){
+                    const wishList= await WishList.findOne({userID:res.user.id}).exec()
+                    if(wishList){
+                        wishList.list.forEach(listProduct=>{if(listProduct.productID==doc.id){isInWishList=true}})
+                    }
+                }
                 for(let k=0;k<comments.length;k++){
                     comment[k]={
                         user:await User.findById(comments[k].fromID),
@@ -146,7 +153,9 @@ class catalogController{
                 res.render("productPage",{
                     auth:res.user,
                     product:doc,
-                    pcomments:comment
+                    pcomments:comment,
+                    isWishList:isInWishList,
+
                 })
             })
         }

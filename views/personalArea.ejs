@@ -7,7 +7,8 @@
 
 </head>
 <body>
-    
+<%admin=false%>
+<%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
 <%- include('components/nav') %>
 <div class=" sections">
     <div class="container inSections ">
@@ -22,15 +23,14 @@
 
 
     <div class="tab " style="margin-left: 15%; margin-right: 15%">
-        <%if(user._id==auth.id){%>
+        <%if(user._id==auth.id ||admin){%>
             <button class="tablinks btn-lg" onclick="openTab1(event, 'My Ads')"><%-user.username%>'s Ads</button>
             <button class="tablinks btn-lg" onclick="openTab1(event, 'Payments')">Payments</button>
         <%}%>
 
         <button class="tablinks btn-lg" onclick="openTab1(event, 'Profile')">Profile</button>
-        <%admin=false%>
-        <%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
-        <%if(user.id==auth._id){%>
+
+        <%if(user.id==auth._id||admin){%>
             <%if(admin){%>
                 <button class="tablinks btn-lg" onclick="openTab1(event, 'Admin')">Admin</button>
             <%}%>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Tab content -->
-    <%if(user.id==user._id){%>
+    <%if(user.id==user._id ||admin){%>
         <div id="My Ads" class="tabcontent1">
             <div class="tab">
                 <button class="tablinks btn-lg" onclick="openTab(event, 'Active')">Active</button>
@@ -347,100 +347,176 @@
         <%}%>
     </div>
 
-    <%if(user.id==auth._id){%>
+    <%if(user.id==auth._id ||admin){%>
         <%if(admin){%>
             <div id="Admin" class="tabcontent1">
                 <a href="/users/1" ><button class="btn btn-warning">All users</button></a>
                 <a href="/allProducts/1"><button class="btn btn-warning">All products</button></a>
             </div>
         <%}%>
-    <%}%>
-
-
-    <div id="Active" class="tabcontent">
+    <div id="Active" class="tabcontent" style="overflow-y: auto; max-height: 500px;">
         <%if(!product){%>
             <h1 class="noAds">No Ads</h1>
         <%}else {%>
-            <ul>
+            <table class="table table-hover ">
+                <tr>
+                    <th>#</th>
+                    <th>Product name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
+                </tr>
                 <%empty=true%>
-                <%product.forEach(data=>{%>
-
-                    <%if(data.status=="ACTIVE"){%>
+                <%for(let k=0;k<product.length;k++){%>
+                    <%if(product[k].status=="ACTIVE"){%>
                         <%empty=false%>
-                        <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
+                        <tr style="font-size: 18px;">
+                            <td><%-k+1%></td>
+                            <td> <a class="text pl-5" href="/product/<%-product[k].id%>"><h3><%-product[k].name%></h3></a></td>
+                            <td><%-product[k].type%></td>
+                            <td><%-product[k].status%></td>
+                            <td><%-product[k].rating%></td>
+                            <td>
+                                <form method="post" action="/catalog/remove/<%-product[k].id%>">
+                                    <button type="submit" class="btn btn-danger">remove</button>
+                                </form>
+                            </td>
+                        </tr>
                     <%}%>
-                <%})%>
+                <%}%>
                 <%if(empty==true){%>
                     <h1 class="noAds">No Ads</h1>
                 <%}%>
-            </ul>
+                <%}%>
+            </table>
         <%}%>
         <a href="/newAd"><button class="btn btn-success"> Submit an ad </button></a>
 
     </div>
 
-    <div id="Waiting" class="tabcontent">
+    <div id="Waiting" class="tabcontent" style="overflow-y: auto; max-height: 500px;">
         <%if(!product){%>
             <h1 class="noAds">No Ads</h1>
         <%}else {%>
-        <ul>
-            <%empty=true%>
-            <%product.forEach(data=>{%>
-
-            <%if(data.status=="WAITING"){%>
-            <%empty=false%>
-            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
-            <%}%>
-            <%})%>
-            <%if(empty==true){%>
-                <h1 class="noAds">No Ads</h1>
-            <%}%>
-        </ul>
+            <table class="table table-hover ">
+                <tr>
+                    <th>#</th>
+                    <th>Product name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
+                </tr>
+                <%empty=true%>
+                <%for(let k=0;k<product.length;k++){%>
+                <%if(product[k].status=="WAITING"){%>
+                <%empty=false%>
+                <tr style="font-size: 18px;">
+                    <td><%-k+1%></td>
+                    <td> <a class="text pl-5" href="/product/<%-product[k].id%>"><h3><%-product[k].name%></h3></a></td>
+                    <td><%-product[k].type%></td>
+                    <td><%-product[k].status%></td>
+                    <td><%-product[k].rating%></td>
+                    <td>
+                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
+                            <button type="submit" class="btn btn-danger">remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <%}%>
+                <%}%>
+                <%if(empty==true){%>
+                    <h1 class="noAds">No Ads</h1>
+                <%}%>
+            </table>
         <%}%>
     </div>
 
 
-    <div id="Inactive" class="tabcontent">
+    <div id="Inactive" class="tabcontent" style="overflow-y: auto; max-height: 500px;">
         <%if(!product){%>
             <h1 class="noAds">No Ads</h1>
         <%}else {%>
-        <ul>
-            <%empty=true%>
-            <%product.forEach(data=>{%>
+            <table class="table table-hover ">
+                <tr>
+                    <th>#</th>
+                    <th>Product name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
+                </tr>
+                <%empty=true%>
+                <%for(let k=0;k<product.length;k++){%>
+                <%if(product[k].status=="INACTIVE"){%>
+                <%empty=false%>
+                <tr style="font-size: 18px;">
+                    <td><%-k+1%></td>
+                    <td> <a class="text pl-5" href="/product/<%-product[k].id%>"><h3><%-product[k].name%></h3></a></td>
+                    <td><%-product[k].type%></td>
+                    <td><%-product[k].status%></td>
+                    <td><%-product[k].rating%></td>
+                    <td>
+                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
+                            <button type="submit" class="btn btn-danger">remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <%}%>
+                <%}%>
+                <%if(empty==true){%>
+                    <h1 class="noAds">No Ads</h1>
+                <%}%>
 
-            <%if(data.status=="INACTIVE"){%>
-            <%empty=false%>
-            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
-            <%}%>
-            <%})%>
-            <%if(empty==true){%>
-                <h1 class="noAds">No Ads</h1>
-            <%}%>
-        </ul>
+            </table>
         <%}%>
     </div>
 
-    <div id="Rejected" class="tabcontent">
+    <div id="Rejected" class="tabcontent" style="overflow-y: auto; max-height: 500px;">
         <%if(!product){%>
             <h1 class="noAds">No Ads</h1>
         <%}else {%>
-        <ul>
-            <%empty=true%>
-            <%product.forEach(data=>{%>
+            <table class="table table-hover ">
+                <tr>
+                    <th>#</th>
+                    <th>Product name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
+                </tr>
+                <%empty=true%>
+                <%for(let k=0;k<product.length;k++){%>
+                <%if(product[k].status=="REJECTED"){%>
+                <%empty=false%>
+                <tr style="font-size: 18px;">
+                    <td><%-k+1%></td>
+                    <td> <a class="text pl-5" href="/product/<%-product[k].id%>"><h3><%-product[k].name%></h3></a></td>
+                    <td><%-product[k].type%></td>
+                    <td><%-product[k].status%></td>
+                    <td><%-product[k].rating%></td>
+                    <td>
+                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
+                            <button type="submit" class="btn btn-danger">remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <%}%>
+                <%}%>
+                <%if(empty==true){%>
+                    <h1 class="noAds">No Ads</h1>
+                <%}%>
 
-            <%if(data.status=="REJECTED"){%>
-            <%empty=false%>
-            <li><a href="/product/<%-data.id%>"><%-data.name%></a></li>
-            <%}%>
-            <%})%>
-            <%if(empty==true){%>
-                <h1 class="noAds">No Ads</h1>
-            <%}%>
-        </ul>
+            </table>
         <%}%>
     </div>
+
+
 </div>
-</div>
+
+
+
 
 <%- include('components/footer')%>
 
