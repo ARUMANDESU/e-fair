@@ -35,18 +35,34 @@ class catalogController{
             // await fruitType.save()
             // await vegetablesType.save()
             try{
+                const products=[]
+                const product= await Product.find({status:"ACTIVE"}).sort({rating:-1})
+                let isInWishList=false;
+
+                for(let k=0;k<product.length;k++){
+                    if(res.user){
+                        const wishList= await WishList.findOne({userID:res.user.id}).exec()
+                        if(wishList){
+                            wishList.list.forEach(listProduct=>{if(listProduct.productID==product[k].id){isInWishList=true}})
+                        }
+                    }
+                    products[k]={
+                        product: product[k],
+                        inWishList: isInWishList
+                    }
+                    isInWishList=false
+                }
                 const pageNum= req.params.page
                 const start=(pageNum-1)*20
-                Product.find().exec().then( async doc=>{
-                    const end = doc.length;
-                    res.render("catalog",{
-                        auth:res.user,
-                        product:doc,
-                        start:start,
-                        end:end,
-                        page:pageNum,
-                    })
+                const end = products.length
+                res.render("catalog",{
+                    auth:res.user,
+                    product:products,
+                    start:start,
+                    end:end,
+                    page:pageNum,
                 })
+
 
 
             }
@@ -203,6 +219,7 @@ class catalogController{
                     product: product[k],
                     inWishList: isInWishList
                 }
+                isInWishList=false
             }
             res.render("index",{auth:res.user,product:products})
         }
@@ -214,18 +231,33 @@ class catalogController{
     async catalogType(req,res){
         try{
             const typeName=req.params.type
+            const products=[]
+            const product= await Product.find({type:typeName.toUpperCase(),status:"ACTIVE"}).sort({rating:-1})
+            let isInWishList=false;
+
+            for(let k=0;k<product.length;k++){
+                if(res.user){
+                    const wishList= await WishList.findOne({userID:res.user.id}).exec()
+                    if(wishList){
+                        wishList.list.forEach(listProduct=>{if(listProduct.productID==product[k].id){isInWishList=true}})
+                    }
+                }
+                products[k]={
+                    product: product[k],
+                    inWishList: isInWishList
+                }
+                isInWishList=false
+            }
             const pageNum= req.params.page
             const start=(pageNum-1)*20
-            Product.find({type:typeName.toUpperCase()}).exec().then( async doc=>{
-                const end = doc.length;
-                res.render("catalogType",{
-                    auth:res.user,
-                    product:doc,
-                    start:start,
-                    end:end,
-                    page:pageNum,
-                    type:typeName
-                })
+            const end = products.length
+            res.render("catalogType",{
+                auth:res.user,
+                product:products,
+                start:start,
+                end:end,
+                page:pageNum,
+                type:typeName,
             })
 
 

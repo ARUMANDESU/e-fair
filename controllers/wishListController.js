@@ -48,10 +48,11 @@ class wishListController {
     async deleteFromMyWishList(req,res){
         try{
             const product =req.params.product
-            console.log("delete")
-
-            await WishList.updateOne({$pullAll:{list:{productID: product}}})
-            res.status(200)
+            console.log(product)
+            console.log(res.user.id)
+            const wishList= await WishList.findOneAndUpdate({userID:res.user._id},{$pull:{list:{productID:product}}})
+            console.log(wishList)
+            res.status(200).render("message",{auth:res.user,message:"Deleted",timeout:1500,where:"/MyWishList"})
         }
         catch (e) {
             console.log(e);
