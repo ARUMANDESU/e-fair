@@ -26,8 +26,17 @@
                 <td><%-products[k].product.status%></td>
                 <td><%-products[k].product.rating%></td>
                 <td>
-                    <form method="post" action="/catalog/remove/<%-products[k].product.id%>">
-                        <button type="submit" class="btn btn-danger">remove</button>
+                    <form class="d-flex flex-row">
+                        <button  class="btn btn-danger" onclick="removeProduct('<%-products[k].product.id%>')">remove</button>
+                    </form>
+                    <form class="d-flex flex-row">
+                        <select id="setStatus<%-k%>" name="status" class="form-select" >
+                            <option value="ACTIVE">Active</option>
+                            <option value="WAITING">Waiting</option>
+                            <option value="INACTIVE">Inactive</option>
+                            <option value="REJECTED">Rejected</option>
+                        </select>
+                        <button class="btn btn-danger" onclick="setStatus('<%-products[k].product.id%>',document.getElementById('setStatus<%-k%>').value)">Set</button>
                     </form>
                 </td>
             </tr>

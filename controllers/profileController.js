@@ -50,7 +50,7 @@ class profileController{
         try{
             res.render("personalArea",{
                 auth:res.user,
-                user:[],
+                user:res.user,
                 edit:true,
                 product:[],
                 pcomments:[],
@@ -89,7 +89,7 @@ class profileController{
     async personalAreaEditAvaGet(req,res){
         try{
             res.render("changeAva",{
-                auth:res.user,
+                auth:res.user,user:res.user,
             })
         }
         catch (e) {
@@ -119,7 +119,7 @@ class profileController{
             const user = await User.updateOne({_id:u.id},{
                 avatarUrl:result.secure_url,
             })
-            res.render("message",{auth:res.user,message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
+            res.render("message",{auth:res.user,user:[],message:"changed",timeout:100,where:`/user/profile/${res.user.username}`})
         }
         catch (e) {
             console.log(e);

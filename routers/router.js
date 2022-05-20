@@ -87,6 +87,8 @@ router
 router
     .post('/catalog/remove/:id',auth(),catalogController.removeProduct)
 router
+    .post('/catalog/set/:statusName/:id',auth(),catalogController.setStatus)
+router
     .get('/user/edit/ava',auth(),profileController.personalAreaEditAvaGet)
     .post('/user/edit/ava',auth(),upload.single("iavatar"),profileController.personalAreaEditAvaPost)
 router

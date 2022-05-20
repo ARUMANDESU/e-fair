@@ -203,7 +203,7 @@ class catalogController{
                 }
             })
             const deleteProduct =await Product.deleteOne({_id:productIdName})
-            res.render("message",{auth:res.user,message:"Removed",timeout:1000,where:`/allProducts/1`})
+            res.status(200)
 
         }
         catch (e){
@@ -279,12 +279,30 @@ class catalogController{
     async search(req,res){
         try{
             let payload =req.body.payload.trim()
+
             const productAndUser=[]
             const product=await Product.find({name:{$regex: new RegExp('^'+payload+'.*','i')}}).sort({rating:-1}).exec();
+            const users = await User.find({username:{$regex: new RegExp('^'+payload+'.*','i')}}).exec();
             for(let k=0;k<product.length;k++){
                 productAndUser[k]={product:product[k],user:await User.findById(product[k].ownerID)}
             }
-            res.send({payload:productAndUser});
+            const pay={
+                productAndUser:productAndUser,
+                users:users,
+            } 
+            res.send({payload:pay});
+
+        }
+        catch (e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Error",timeout:1000,where:`/home`})
+        }
+    }
+    async setStatus(req,res){
+        try{
+            const status = req.params.statusName
+            const id= req.params.id
+            const product= await Product.findOneAndUpdate({_id:id},{status:status})
 
         }
         catch (e) {

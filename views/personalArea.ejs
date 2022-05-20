@@ -9,6 +9,8 @@
 <body>
 <%admin=false%>
 <%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
+<%adminUser=false%>
+<%user.roles.forEach((role)=>{if(role=="ADMIN"){adminUser=true}})%>
 <%- include('components/nav') %>
 <div class=" sections">
     <div class="container inSections ">
@@ -378,9 +380,20 @@
                             <td><%-product[k].status%></td>
                             <td><%-product[k].rating%></td>
                             <td>
-                                <form method="post" action="/catalog/remove/<%-product[k].id%>">
-                                    <button type="submit" class="btn btn-danger">remove</button>
+                                <form class="d-flex flex-row">
+                                    <button  class="btn btn-danger" onclick="removeProduct('<%-product[k].id%>')">remove</button>
                                 </form>
+                                <%if(admin||adminUser){%>
+                                <form class="d-flex flex-row">
+                                    <select id="setStatus<%-k%>" name="status" class="form-select" >
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="WAITING">Waiting</option>
+                                        <option value="INACTIVE">Inactive</option>
+                                        <option value="REJECTED">Rejected</option>
+                                    </select>
+                                    <button class="btn btn-danger" onclick="setStatus('<%-product[k].id%>',document.getElementById('setStatus<%-k%>').value)">Set</button>
+                                </form>
+                                <%}%>
                             </td>
                         </tr>
                     <%}%>
@@ -419,9 +432,20 @@
                     <td><%-product[k].status%></td>
                     <td><%-product[k].rating%></td>
                     <td>
-                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
-                            <button type="submit" class="btn btn-danger">remove</button>
+                        <form class="d-flex flex-row">
+                            <button  class="btn btn-danger" onclick="removeProduct('<%-product[k].id%>')">remove</button>
                         </form>
+                        <%if(admin||adminUser){%>
+                        <form class="d-flex flex-row">
+                            <select id="setStatus<%-k%>" name="status" class="form-select" >
+                                <option value="ACTIVE">Active</option>
+                                <option value="WAITING">Waiting</option>
+                                <option value="INACTIVE">Inactive</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                            <button class="btn btn-danger" onclick="setStatus('<%-product[k].id%>',document.getElementById('setStatus<%-k%>').value)">Set</button>
+                        </form>
+                        <%}%>
                     </td>
                 </tr>
                 <%}%>
@@ -458,9 +482,20 @@
                     <td><%-product[k].status%></td>
                     <td><%-product[k].rating%></td>
                     <td>
-                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
-                            <button type="submit" class="btn btn-danger">remove</button>
+                        <form class="d-flex flex-row">
+                            <button  class="btn btn-danger" onclick="removeProduct('<%-product[k].id%>')">remove</button>
                         </form>
+                        <%if(admin||adminUser){%>
+                        <form class="d-flex flex-row">
+                            <select id="setStatus<%-k%>" name="status" class="form-select" >
+                                <option value="ACTIVE">Active</option>
+                                <option value="WAITING">Waiting</option>
+                                <option value="INACTIVE">Inactive</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                            <button class="btn btn-danger" onclick="setStatus('<%-product[k].id%>',document.getElementById('setStatus<%-k%>').value)">Set</button>
+                        </form>
+                        <%}%>
                     </td>
                 </tr>
                 <%}%>
@@ -497,9 +532,20 @@
                     <td><%-product[k].status%></td>
                     <td><%-product[k].rating%></td>
                     <td>
-                        <form method="post" action="/catalog/remove/<%-product[k].id%>">
-                            <button type="submit" class="btn btn-danger">remove</button>
+                        <form class="d-flex flex-row">
+                            <button  class="btn btn-danger" onclick="removeProduct('<%-product[k].id%>')">remove</button>
                         </form>
+                        <%if(admin||adminUser){%>
+                        <form class="d-flex flex-row">
+                            <select id="setStatus<%-k%>" name="status" class="form-select" >
+                                <option value="ACTIVE">Active</option>
+                                <option value="WAITING">Waiting</option>
+                                <option value="INACTIVE">Inactive</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                            <button class="btn btn-danger" onclick="setStatus('<%-product[k].id%>',document.getElementById('setStatus<%-k%>').value)">Set</button>
+                        </form>
+                        <%}%>
                     </td>
                 </tr>
                 <%}%>

@@ -108,12 +108,12 @@ a{
     min-width: 50px;
     max-width: 800px;
 }
-.search_suggestion{
+.suggestion{
     max-height: calc(100vh - 92px);
     overflow-y: auto;
     background-color: #ffffff;
 }
-.search_suggestion a:hover{
+.suggestion a:hover{
     color: black;
 }
 .ad_list_cover{
