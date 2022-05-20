@@ -289,7 +289,7 @@ class catalogController{
             const pay={
                 productAndUser:productAndUser,
                 users:users,
-            } 
+            }
             res.send({payload:pay});
 
         }

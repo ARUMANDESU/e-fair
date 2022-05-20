@@ -48,11 +48,12 @@
             <h2><%-product.cost%></h2>
         </div>
         <form class="d-flex justify-content-end my-5">
-
+            <%if(auth!=null){%>
             <%if(!isWishList){%>
                 <button class="btn btn-success btn-lg" onclick="addToMyWishList('<%-product._id%>')"> add to card</button>
             <%}else{%>
                 <button class="btn btn-danger btn-lg" onclick="deleteFromMyWishList('<%-product._id%>')">remove from my wish list</button>
+            <%}%>
             <%}%>
         </form>
 

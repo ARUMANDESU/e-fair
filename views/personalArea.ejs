@@ -8,7 +8,11 @@
 </head>
 <body>
 <%admin=false%>
+<%if(auth){%>
 <%auth.roles.forEach((role)=>{if(role=="ADMIN"){admin=true}})%>
+<%} else{%>
+    <%auth={id:""}%>
+<%}%>
 <%adminUser=false%>
 <%user.roles.forEach((role)=>{if(role=="ADMIN"){adminUser=true}})%>
 <%- include('components/nav') %>

@@ -36,17 +36,16 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 
 router
-    .get('/login' , (req, res) => {
+    .get('/login' ,auth(), (req, res) => {
     res.render("login",{auth:res.user})
-
     })
-    .post('/login', authController.login)
+    .post('/login',auth(), authController.login)
 
 router
     .get('/register',auth(), (req, res) => {
     res.render("register",{auth:res.user})
     })
-    .post('/register', [
+    .post('/register',auth(), [
         check('username',"Username cannot be empty").notEmpty(),
         check('password',"Password must be more than 7 and less than 15 symbols").isLength({min:7,max:15})
     ],authController.register)
@@ -67,8 +66,8 @@ router
 router
     .get('/catalog/:type/page/:page',auth(),catalogController.catalogType)
 router
-    .get('/newAd',auth(), catalogController.newAdGet)
-    .post("/newAd",auth(),catalogController.newAdPost)
+    .get('/newAd',auth(),roleMiddleware(['USER','ADMIN']), catalogController.newAdGet)
+    .post("/newAd",auth(),roleMiddleware(['USER','ADMIN']),catalogController.newAdPost)
 router
     .get('/product/:id',auth(),catalogController.productPage)
 router
@@ -78,19 +77,19 @@ router
 router
     .get('/user/profile/:id',auth(), profileController.personalAreaGet)
 router
-    .get('/user/edit',auth(),profileController.personalAreaEditGet)
-    .post('/user/edit',auth(),profileController.personalAreaEditPost)
+    .get('/user/edit',auth(),roleMiddleware(['USER','ADMIN']),profileController.personalAreaEditGet)
+    .post('/user/edit',auth(),roleMiddleware(['USER','ADMIN']),profileController.personalAreaEditPost)
 router
     .post('/users/delete/:user',auth(),roleMiddleware(['ADMIN']),profileController.deleteUser)
     .post('/users/make/:user/:role',auth(),roleMiddleware(['ADMIN']),profileController.assignRole)
     .post('/users/make/:user/:role',auth(),roleMiddleware(['ADMIN']),profileController.assignRole)
 router
-    .post('/catalog/remove/:id',auth(),catalogController.removeProduct)
+    .post('/catalog/remove/:id',auth(),roleMiddleware(['ADMIN']),catalogController.removeProduct)
 router
-    .post('/catalog/set/:statusName/:id',auth(),catalogController.setStatus)
+    .post('/catalog/set/:statusName/:id',auth(),roleMiddleware(['ADMIN']),catalogController.setStatus)
 router
-    .get('/user/edit/ava',auth(),profileController.personalAreaEditAvaGet)
-    .post('/user/edit/ava',auth(),upload.single("iavatar"),profileController.personalAreaEditAvaPost)
+    .get('/user/edit/ava',auth(),roleMiddleware(['USER','ADMIN']),profileController.personalAreaEditAvaGet)
+    .post('/user/edit/ava',auth(),roleMiddleware(['USER','ADMIN']),upload.single("iavatar"),profileController.personalAreaEditAvaPost)
 router
     .get('/logout',authController.logOut)
 router
@@ -107,16 +106,16 @@ router
     })
 
 router
-    .post('/addComment/:fid/to/:tid',auth(),commentController.addNewComment)
+    .post('/addComment/:fid/to/:tid',auth(),roleMiddleware(['USER','ADMIN']),commentController.addNewComment)
 router
-    .get('/MyWishList',auth(),wishListController.getWishList)
-    .post('/addToMyWishList/:product',auth(),wishListController.addToWishList)
-    .post('/deleteFromMyWishList/:product',auth(),wishListController.deleteFromMyWishList)
+    .get('/MyWishList',auth(),roleMiddleware(['USER','ADMIN']),wishListController.getWishList)
+    .post('/addToMyWishList/:product',auth(),roleMiddleware(['USER','ADMIN']),wishListController.addToWishList)
+    .post('/deleteFromMyWishList/:product',auth(),roleMiddleware(['USER','ADMIN']),wishListController.deleteFromMyWishList)
 
 
 
 //chat
 router
-    .get('/chat',auth(),chatController.chat)
-    .get('/chat/:username',auth(),chatController.chatusername)
+    .get('/chat',auth(),roleMiddleware(['USER','ADMIN']),chatController.chat)
+    .get('/chat/:username',auth(),roleMiddleware(['USER','ADMIN']),chatController.chatusername)
 module.exports= router;
