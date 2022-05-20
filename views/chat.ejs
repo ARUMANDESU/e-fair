@@ -9,8 +9,7 @@
 
 
 <div class=" container-fluid mainsection " >
-    <section class="container-fluid py-5" style="border-radius: 67px;background-color: #F2F2F2;">
-
+    <section class="container-fluid " style="border-radius: 67px;background-color: #F2F2F2;">
         <!-- container element in which TalkJS will display a chat UI -->
         <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
             <i>Loading chat...</i>
@@ -25,7 +24,7 @@
                     .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
     Talk.ready.then(function () {
 
-        const meID='<%-auth.id%>'
+        const meID='<%=auth.id%>'
         var me = new Talk.User({
             id: meID,
             name: '<%-auth.username%>',

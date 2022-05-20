@@ -14,23 +14,31 @@
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <%for(let k=start;k<((end>start+20)?start+20:end);k++){%>
                     <div class="col-3 item m-2">
-                        <a  href="/product/<%-product[k].id%>">
-                            <img class="img-fluid" src="<%-product[k].images[0].path%>">
-                            <%if(auth){%>
-                            <form>
+                        <a  href="/product/<%-product[k].product.id%>">
+                            <img class="img-fluid" src="<%-product[k].product.images[0].path%>">
 
-                                <%if(product[k].inWishList){%>
-                                    <button class="btn btn-danger" style="border-radius: 100%; width: 25px; height: 25px;" disabled>  </button>
-                                <%} else{%>
-                                <button class="btn btn-success" style="border-radius: 100%; width: 25px; height: 25px;" onclick="addToMyWishList('<%-product[k].id%>')">  </button>
-                                <%}%>
-                            </form>
-                            <%}%>
-                            <div class="text-center d-flex flex-column">
-                                <b><%-product[k].name%></b>
-                                <p><%-product[k].type.toString().toLowerCase()%></p>
-                            </div>
                         </a>
+                        <div class="text-center d-flex flex-column">
+                            <div>
+                                <a  href="/product/<%-product[k].product.id%>">
+                                    <b><%-product[k].product.name%></b>
+                                </a>
+                                <%if(auth){%>
+                                <form>
+
+                                    <%if(product[k].inWishList){%>
+                                        <button class="btn btn-danger" style="border-radius: 100%; width: 25px; height: 25px;" disabled>  </button>
+                                    <%} else{%>
+                                    <button class="btn btn-success" style="border-radius: 100%; width: 25px; height: 25px;" onclick="addToMyWishList('<%-product[k].product.id%>')">  </button>
+                                    <%}%>
+                                </form>
+                                <%}%>
+                            </div>
+
+                            <p><%-product[k].product.type.toString().toLowerCase()%></p>
+                        </div>
+
+
                     </div>
                     <%}%>
 
