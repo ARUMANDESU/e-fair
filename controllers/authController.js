@@ -92,12 +92,12 @@ class authController{
         try {
             const email = await req.user.email;
             const username = await req.user.displayName;
-            const user = await User.findOne({username})
+            let user = await User.findOne({email})
             if(!user) {
                 const userRole = await Role.findOne({value: "USER"})
                 const hashPassword = bcrypt.hashSync(randomPass(),7);
-                const user = new User({email,username,password:hashPassword,roles:[userRole.value],avatarUrl:"https://res.cloudinary.com/nezz/image/upload/v1651755541/avatars/ecce-homo_j36lz7.jpg",phoneNumber:"",address:"",twitterUrl:"",instagramUrl:"",facebookUrl:""});
-                await user.save();
+                user = new User({email,username,password:hashPassword,roles:[userRole.value],avatarUrl:`${req.user.photos[0].value}`,phoneNumber:"",address:"",twitterUrl:"",instagramUrl:"",facebookUrl:""});
+                user.save();
             }
             const token =generateAccessToken(user._id,user.roles);
             res.cookie("auth",'Bearer '+ token)
