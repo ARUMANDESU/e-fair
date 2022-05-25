@@ -1,14 +1,9 @@
 const User = require("../modules/User")
 const Role = require("../modules/Role")
+const Guser = require('../modules/Guser');
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const {validationResult} =require("express-validator");
-
-
-
-const {OAuth2Client, auth} = require('google-auth-library');
-const CLIENT_ID = "604574523814-40f76epsh7ji778mnp5c57ct9jm41dqv.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
 
 
 const generateAccessToken = (id,role)=>{
@@ -23,27 +18,9 @@ class authController{
     async register(req, res){
         try{
             
-            let token = req.body.token;
-            
-            console.log(token);
-
-            async function verify() {
-                const ticket = await client.verifyIdToken({
-                    idToken: token,
-                    audience: CLIENT_ID,
-                })
-                const payload = ticket.getPayload();
-                const userid = payload['sub'];
-                console.log(payload);
-                return payload;
-            }
-
-
-
-
-            const email =   req.body.email;
-            const username = req.body.token != null ? verify().username :  req.body.username;
-            const password = req.body.token != null ? verify().username :  req.body.password;
+            const email = req.body.email;
+            const username = req.body.username;
+            const password = req.body.password;
             
             const errors =validationResult(req);
             if(!errors){
@@ -87,6 +64,27 @@ class authController{
         }catch(e){
             console.log(e);
             res.status(400).render("message",{auth:res.user,message:"Login error",timeout:700,where:"/login"})
+        }
+    }
+
+    async gLogin(req, res) {
+        try {
+            const email = await req.user.email;
+            const username = await req.user.displayName;
+            const user = await Guser.findOne({email})
+            if(!user) {
+                const userRole = await Role.findOne({value: "USER"})
+                const user = new Guser({username, email, roles: [userRole.value]})
+                await user.save();
+            }
+            const token =generateAccessToken(user._id,user.roles);
+            res.cookie("auth",'Bearer '+ token)
+            res.render("message",{auth:res.user,message:"You successfully logged in",timeout:500,where:"/home"})
+    
+        } catch(e) {
+            console.log(e);
+            res.status(400).render("message",{auth:res.user,message:"Login error",timeout:700,where:"/login"})
+    
         }
     }
     

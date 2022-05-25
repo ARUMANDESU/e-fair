@@ -17,6 +17,13 @@ const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
 const upload = require("../utils/multer");
 const dotenv =require("dotenv")
+const passport = require('passport');
+
+const session = require("express-session");
+
+router.use(session({secret:"cats"}));
+router.use(passport.initialize());
+router.use(passport.session());
 
 dotenv.config()
 const Razorpay =require('razorpay')
@@ -49,6 +56,10 @@ router
         check('username',"Username cannot be empty").notEmpty(),
         check('password',"Password must be more than 7 and less than 15 symbols").isLength({min:7,max:15})
     ],authController.register)
+
+
+router
+    .get('/auth/db', auth(), authController.gLogin);    
 
 router
     .get("/users/:page" ,auth(),roleMiddleware(['ADMIN']) ,authController.getUsers);
