@@ -92,7 +92,7 @@ class authController{
         try {
             const email = await req.user.email;
             const username = await req.user.displayName;
-            const user = await User.findOne({email})
+            const user = await User.findOne({username})
             if(!user) {
                 const userRole = await Role.findOne({value: "USER"})
                 const hashPassword = bcrypt.hashSync(randomPass(),7);
