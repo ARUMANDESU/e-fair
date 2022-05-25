@@ -1,6 +1,5 @@
 const User = require("../modules/User")
 const Role = require("../modules/Role")
-const Guser = require('../modules/Guser');
 const bcrypt =require("bcryptjs")
 const jwt =require("jsonwebtoken")
 const {validationResult} =require("express-validator");
@@ -12,6 +11,28 @@ const generateAccessToken = (id,role)=>{
         role
     }
     return jwt.sign(payload,process.env.secret,{expiresIn:"24h"})
+}
+
+const randomPass = () => {
+    let a = Math.round(Math.random() * 11);
+    let passw = a % 3 == 0 ? Math.round(Math.random() * 9) :
+    a % 3 == 1 ? String.fromCharCode(Math.round(Math.random() * (90 - 65) + 65)) :
+    String.fromCharCode(Math.round(Math.random() * (122 - 97) + 97));
+
+    for (let i = 0; i < 20; i++) {
+        if(Math.round(Math.random() * 11) % 2 == 0) {
+            passw += Math.round(Math.random() * 9);
+        }
+        else {
+            if(Math.round(Math.random() * 11) % 2 == 0) {
+                passw += String.fromCharCode(Math.round(Math.random() * (90 - 65) + 65));
+            }
+            else {
+                passw += String.fromCharCode(Math.round(Math.random() * (122 - 97) + 97));
+            }
+        }
+    }
+    return passw;
 }
 
 class authController{
@@ -71,10 +92,11 @@ class authController{
         try {
             const email = await req.user.email;
             const username = await req.user.displayName;
-            const user = await Guser.findOne({email})
+            const user = await User.findOne({email})
             if(!user) {
                 const userRole = await Role.findOne({value: "USER"})
-                const user = new Guser({username, email, roles: [userRole.value]})
+                const hashPassword = bcrypt.hashSync(randomPass(),7);
+                const user = new User({email,username,password:hashPassword,roles:[userRole.value],avatarUrl:"https://res.cloudinary.com/nezz/image/upload/v1651755541/avatars/ecce-homo_j36lz7.jpg",phoneNumber:"",address:"",twitterUrl:"",instagramUrl:"",facebookUrl:""});
                 await user.save();
             }
             const token =generateAccessToken(user._id,user.roles);
