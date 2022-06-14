@@ -99,10 +99,11 @@ class catalogController{
                     next(err)
                     return;
                 }
+
                 const images=[]
                 if(files.images.size!=0){
                     console.log(files.images)
-                    if(typeof files.images=="object"&&files.images.length==1){
+                    if((typeof files.images[0])=='undefined'){
                         const result = await cloudinary.uploader.upload(files.images.filepath,{folder:`Product`,transformation: [{width: 1592, height: 745, crop: "thumb"}]});
                         images[0]={public_id:result.public_id,path: result.secure_url}
                     }
@@ -113,7 +114,6 @@ class catalogController{
 
                         }
                     }
-
                 }
                 else{
                     images[0]={public_id:"Product/No_image_3x4.svg_dj7xfv",path:"https://res.cloudinary.com/nezz/image/upload/v1651846941/Product/No_image_3x4.svg_dj7xfv.png"}
