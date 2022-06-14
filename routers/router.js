@@ -129,4 +129,9 @@ router
 router
     .get('/chat',auth(),roleMiddleware(['USER','ADMIN']),chatController.chat)
     .get('/chat/:username',auth(),roleMiddleware(['USER','ADMIN']),chatController.chatusername)
+
+router
+    .get("/FAQ",auth(),(req,res)=>{
+        res.render('FAQ',{auth:res.user})
+    })
 module.exports= router;
