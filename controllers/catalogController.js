@@ -202,6 +202,7 @@ class catalogController{
                     const deleteResult= await  cloudinary.uploader.destroy(`${data.public_id}`);
                 }
             })
+            await WishList.updateMany({},{$pull:{list:{productID:product}}})
             const deleteProduct =await Product.deleteOne({_id:productIdName})
             res.status(200)
 
