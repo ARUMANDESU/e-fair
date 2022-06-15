@@ -20,7 +20,6 @@ A website where farm food sellers can list their products and users can choose b
 - [EJS (Embedded JavaScript templates)](https://www.npmjs.com/package/ejs)
 - [Cloudinaty (Platform where you can upload img and videos after get access them)](https://cloudinary.com/)
 
-#
 
 ### ejs template:
 ```
@@ -37,7 +36,7 @@ A website where farm food sellers can list their products and users can choose b
 </html>
 ```
 ---
-#How to run
+# How to run
 ### Dependencies:
 ```
     "bcryptjs": "^2.4.3",
@@ -58,11 +57,11 @@ A website where farm food sellers can list their products and users can choose b
     "passport-google-oauth2": "^0.2.0",
     "razorpay": "^2.8.1"
 ```
-###To run it locally you need to write in cmd :
+### To run it locally you need to write in cmd :
 ```
 npm run start
 ```
 
-#Account for testing
-####ADMIN - username:admin,  password:adminadmin123
-####USER - username:USERTesting,  password:USERUSERUSER
+# Account for testing
+#### ADMIN - username:admin,  password:adminadmin123
+#### USER - username:USERTesting,  password:USERUSERUSER
