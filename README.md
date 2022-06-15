@@ -36,3 +36,29 @@ A website where farm food sellers can list their products and users can choose b
 </body>
 </html>
 ```
+---
+#How to run
+### Dependencies:
+```
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "cloudinary": "^1.29.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.0",
+    "formidable": "^2.0.1",
+    "google-auth-library": "^8.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.0",
+    "multer": "^1.4.4",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "razorpay": "^2.8.1"
+```
+###To run it locally you need to write in cmd :
+```
+npm run start
+```
