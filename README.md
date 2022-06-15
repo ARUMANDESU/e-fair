@@ -62,3 +62,7 @@ A website where farm food sellers can list their products and users can choose b
 ```
 npm run start
 ```
+
+#Account for testing
+####ADMIN - username:admin,  password:adminadmin123
+####USER - username:USERTesting,  password:USERUSERUSER
