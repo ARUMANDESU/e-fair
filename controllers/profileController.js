@@ -111,6 +111,7 @@ class profileController{
             }
             const u = jwt.verify(token, process.env.secret)
             const oldAvatar=res.user.avatarUrl.split("/")
+            console.log(oldAvatar)
             if(oldAvatar!="https://res.cloudinary.com/nezz/image/upload/v1651755541/avatars/ecce-homo_j36lz7.jpg"){
                 const public_id=`${oldAvatar[7]+"/"+oldAvatar[8].slice(0,20)}`
                 const deleteResult= await  cloudinary.uploader.destroy(`${public_id}`);
